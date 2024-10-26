@@ -1,0 +1,183 @@
+﻿@page "/create-item"
+@using AutoMapper
+@using Microsoft.AspNetCore.WebUtilities
+@using WindsorX_2027.LagerModel
+@using WindsorX_2027.LagerRepositoryMappe
+@inject ILagerRepository lagerRepository
+@inject IMapper mapper
+@inject NavigationManager Navigation
+
+<link href="\css\Lager.css" rel="stylesheet" />
+
+
+
+@if (errorMessage != null)
+{
+    <div class="alert alert-danger" role="alert">
+        @errorMessage
+    </div>
+}
+
+
+<div class="col-6 ">
+
+    <h3 style="color:blue">Opret Varenummer</h3>
+    <EditForm Model="@viewModel" OnValidSubmit="@CreateOrUpdateItem">
+        <DataAnnotationsValidator />
+        <div class="form-group">
+            <label>Varenummer:</label>
+            <InputText class="form-control" @bind-Value="viewModel.vareNummer" />
+            <ValidationMessage For="@(() => viewModel.vareNummer)" />
+        </div>
+        <div class="form-group">
+            <label>Varetekst:</label>
+            <InputText class="form-control" @bind-Value="viewModel.vareTekst" />
+            <ValidationMessage For="@(() => viewModel.vareTekst)" />
+        </div>
+
+
+        <div class="form-group">
+            <label>Varemængde:</label>
+            <InputNumber class="form-control" @bind-Value="viewModel.vareMaengde" />
+            <ValidationMessage For="@(() => viewModel.vareMaengde)" />
+        </div>
+
+        <div class="form-group">
+            <label>Enhed : </label>
+            <InputSelect @bind-Value="viewModel.enheder" class="form-control">
+                <option value="">Vaelg Enhed...</option>
+                <option value="stk.">Stk.</option>
+                <option value="ltr.">ltr.</option>
+                <option value="kasse">kasse</option>
+                <option value="pose">pose</option>
+            </InputSelect>
+        </div>
+
+        <div class="form-group">
+            <label>Kostpris:</label>
+            <InputNumber class="form-control" @bind-Value="viewModel.kostPris" />
+            <ValidationMessage For="@(() => viewModel.kostPris)" />
+        </div>
+
+        <div class="form-group">
+            <label>Max Lager:</label>
+            <InputNumber class="form-control" @bind-Value="viewModel.maxLager" />
+            <ValidationMessage For="@(() => viewModel.maxLager)" />
+        </div>
+
+        <div class="form-group">
+            <label>Min Lager:</label>
+            <InputNumber class="form-control" @bind-Value="viewModel.minLager" />
+            <ValidationMessage For="@(() => viewModel.minLager)" />
+        </div>
+
+
+        <div class="row">
+            <div class="col-auto my-button">
+                <button type="submit" class="btn btn-primary">
+                    <i class="oi oi-document"></i> Opret/opdater
+                </button>
+            </div>
+
+        </div>
+
+
+    </EditForm>
+
+</div>
+
+@code {
+    private DisplayLagerData viewModel = new DisplayLagerData();
+    private string errorMessage;
+    private bool isUpdateMode = false;
+    private string PageTitle => isUpdateMode ? "Opdater Vare" : "Opret Varenummer";
+    private int? itemId; // Tilføjet for at holde ID for den vare, der opdateres
+
+    protected override async Task OnInitializedAsync()
+    {
+        var uri = Navigation.ToAbsoluteUri(Navigation.Uri);
+        if (QueryHelpers.ParseQuery(uri.Query).TryGetValue("update", out var updateValue))
+        {
+            isUpdateMode = bool.Parse(updateValue.FirstOrDefault());
+        }
+
+        if (QueryHelpers.ParseQuery(uri.Query).TryGetValue("id", out var idValue))
+        {
+            itemId = int.Parse(idValue.FirstOrDefault());
+            if (isUpdateMode && itemId.HasValue)
+            {
+                var item = await lagerRepository.GetItemByIdAsync(itemId.Value);
+                if (item != null)
+                {
+                    viewModel = mapper.Map<DisplayLagerData>(item);
+
+                    // switch (viewModel.enheder)
+                    // {
+                    //     case "stk.": viewModel.enheder = "1"; break;
+                    //     case "ltr.": viewModel.enheder = "2"; break;
+                    //     case "kasse": viewModel.enheder = "3"; break;
+                    //     case "pose": viewModel.enheder = "4"; break;
+                    // }
+
+                }
+            }
+        }
+    }
+
+    private async Task CreateOrUpdateItem()
+    {
+        try
+        {
+            if (!isUpdateMode && await lagerRepository.DoesVarenummerExistAsync(viewModel.vareNummer))
+            {
+                errorMessage = "En vare med dette varenummer eksisterer allerede.";
+                return;
+            }
+
+            //ConvertEnhederValue();
+            viewModel.oprDato = DateTime.Now;
+
+            Lagermodel lagerData = mapper.Map<Lagermodel>(viewModel);
+
+            if (isUpdateMode)
+            {
+                await lagerRepository.UpdateItemAsync(lagerData);
+
+            }
+            else
+            {
+                await lagerRepository.CreateItemAsync(lagerData);
+                errorMessage = "Ny vare er oprettet succesfuldt.";
+            }
+
+            ResetForm();
+            DisplayLagerListe();
+        }
+        catch (Exception ex)
+        {
+            errorMessage = $"Der opstod en fejl: {ex.Message}";
+        }
+    }
+
+    private void ConvertEnhederValue()
+    {
+        switch (viewModel.enheder)
+        {
+            case "1": viewModel.enheder = "stk."; break;
+            case "2": viewModel.enheder = "ltr."; break;
+            case "3": viewModel.enheder = "kasse"; break;
+            case "4": viewModel.enheder = "pose"; break;
+        }
+    }
+
+    private void ResetForm()
+    {
+        viewModel = new DisplayLagerData();
+        isUpdateMode = false; // Nulstiller tilstanden
+    }
+
+    private void DisplayLagerListe()
+    {
+        Navigation.NavigateTo("/Displaylager");
+    }
+}

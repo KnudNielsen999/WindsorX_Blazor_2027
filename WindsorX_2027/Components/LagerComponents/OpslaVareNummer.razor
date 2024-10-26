@@ -1,0 +1,114 @@
+﻿@page "/Opslaavarenummer"
+@using WindsorX_2027.LagerModel
+@using WindsorX_2027.LagerRepositoryMappe
+@inject ILagerRepository lagerRepository
+@inject NavigationManager Navigation
+
+<link href="\css\Lager.css" rel="stylesheet" />
+
+@if (!string.IsNullOrEmpty(Varenummer))
+{
+    <h3>@Message</h3>
+    <div class="row">
+        <div class="col-auto">
+            <div class="input-group">
+                <input type="text" class="form-control" @bind="varenummer" placeholder="Indtast varenummer">
+                <button class="btn btn-secondary" @onclick="SøgEfterVarenummer">
+                    <i class="oi oi-compass"></i>
+                    Søg
+                </button>
+            </div>
+        </div>
+    </div>
+}
+
+else if (string.IsNullOrEmpty(Varenummer))
+{
+    <h3>@Message</h3>
+    <div class="row">
+        <div class="col-auto">
+            <div class="input-group">
+                <input type="text" class="form-control" @bind="varenummer" placeholder="Indtast varenummer">
+                <button class="btn btn-secondary" @onclick="SøgEfterVarenummer">
+                    <i class="oi oi-compass"></i>
+                    Søg
+                </button>
+            </div>
+        </div>
+    </div>
+}
+
+<table class="table table-striped">
+    <thead>
+        <tr id="listeoverskrift">
+            <th>Varenummer</th>
+            <th>Varetekst</th>
+            <th id="talformat">Vare Mængde</th>
+            <th id="talformat">Enheder</th>
+            <th id="talformat">Kost pris</th>
+            <th id="talformat">Max lager</th>
+            <th id="talformat">Min lager</th>
+        </tr>
+    </thead>
+
+
+    @foreach (var item in fundenvarenummer)
+    {
+        <tbody>
+            <tr id="dataliste">
+                <td>@item.vareNummer</td>
+                <td>@item.vareTekst</td>
+                <td id="talformat">@string.Format("{0:F2}", item.vareMaengde)</td>
+                <td id="talformat">@string.Format("{0:F2}", item.enheder)</td>
+                <td id="talformat">@string.Format("{0:F2}", item.kostPris)</td>
+                <td id="talformat">@string.Format("{0:F2}", item.maxLager)</td>
+                <td id="talformat">@string.Format("{0:F2}", item.minLager)</td>
+
+            </tr>
+        </tbody>
+    }
+</table>
+
+
+<div class="row">
+    <div class="my-button">
+        <button class="btn btn-primary" @onclick="NavigateToLagerliste">
+            <i class="oi oi-list btn btn-secondary"></i>
+            Lager Liste
+        </button>
+    </div>
+</div>
+
+@code {
+    private List<Lagermodel> data = new List<Lagermodel>();
+    private List<Lagermodel> fundenvarenummer = new List<Lagermodel>();
+    public string varenummer { get; set; }
+    [Parameter]
+    public string Message { get; set; }
+    [Parameter]
+    public string Varenummer { get; set; }
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        SøgEfterVarenummer();
+    }
+
+    private void NavigateToLagerliste()
+    {
+        Navigation.NavigateTo("/Displaylager");
+    }
+
+
+    protected override void OnParametersSet()
+    {
+        Message = "Vare forespørgsel";
+    }
+
+    private async Task SøgEfterVarenummer()
+    {
+        fundenvarenummer = await lagerRepository.SoegEfterVarenummer(varenummer);
+
+    }
+
+}

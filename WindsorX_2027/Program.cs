@@ -23,6 +23,7 @@ namespace WindsorX_2027
                 options.UseSqlServer(connectionString));
 
             builder.Services.AddTransient<ILagerRepository, LagerRepository>();
+            builder.Services.AddAutoMapper(typeof(LagerProfile));
 
             var app = builder.Build();
 

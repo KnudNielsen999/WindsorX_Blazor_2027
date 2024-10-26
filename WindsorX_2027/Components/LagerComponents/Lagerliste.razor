@@ -1,5 +1,133 @@
-﻿<h3>Lagerliste2</h3>
+﻿@page "/Displaylager"
+@using WindsorX_2027.LagerModel
+@using WindsorX_2027.LagerRepositoryMappe
+@inject ILagerRepository lagerRepository
+@inject NavigationManager Navigation
+<link href="\css\Lager.css" rel="stylesheet" />
+
+
+<h3>Lager oversigt</h3>
+<h4 style="color:red">@besked</h4>
+
+<div class="table-container">
+    <table class="table table-striped col-12">
+        <thead>
+            <tr id="listeoverskrift">
+                <th>Varenummer</th>
+                <th>Varetekst</th>
+                <th id="talformat">Vare Mængde</th>
+                <th id="talformat">Enheder</th>
+                <th id="talformat">Kost pris</th>
+                <th id="talformat">Max lager</th>
+                <th id="talformat">Min lager</th>
+                <th>Funktion</th>
+                <th></th>
+            </tr>
+        </thead>
+
+
+
+        @foreach (var item in sorteretLagerliste)
+        {
+            <tbody>
+                <tr id="dataliste">
+                    <td>@item.vareNummer</td>
+                    <td>@item.vareTekst</td>
+                    <td id="talformat">@string.Format("{0:F2}", item.vareMaengde)</td>
+                    <td id="talformat">@item.enheder</td>
+                    <td id="talformat">@string.Format("{0:F2}", item.kostPris)</td>
+                    <td id="talformat">@string.Format("{0:F2}", item.maxLager)</td>
+                    <td id="talformat">@string.Format("{0:F2}", item.minLager)</td>
+                    <td class="my-button-cell">
+                        <button class="btn btn-sm btn-danger text-white" @onclick="(e) => DeleteProdukt(item.Id)">
+                            <i class="oi oi-trash"></i> Slet
+                        </button>
+                    </td>
+
+                    <td class="my-button-cell">
+                        <button class="btn btn-sm btn-primary text-white" @onclick="(e) => UpdateProdukt(item)">
+                            <i class="oi oi-pencil"></i> Opdater
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        }
+
+    </table>
+</div>
+
+<div class="row button-container">
+    <div class="col-auto my-button">
+        <button class="btn btn-primary btn-custom" @onclick="NavigateToCreateItem">
+            <i class="oi oi-document"></i> Opret Varenummer
+        </button>
+    </div>
+    <div class="col-auto my-button">
+        <button class="btn btn-success btn-custom" @onclick="NavigateToCheckItem">
+            <i class="oi oi-compass"></i> Check varenummer
+        </button>
+    </div>
+</div>
+
+
+
+
+
 
 @code {
 
+    private List<Lagermodel> data = new();
+    private List<Lagermodel> sorteretLagerliste = new();
+    private string besked="";
+
+    protected override async Task OnInitializedAsync()
+    {
+        
+        data = await lagerRepository.GetAllItemsAsync();
+        sorteretLagerliste = data.OrderBy(p => p.vareTekst).ToList();
+
+
+    }
+
+    private void NavigateToCreateItem()
+    {
+        Navigation.NavigateTo("/create-item");
+    }
+
+
+
+    private void NavigateToCheckItem()
+    {
+        Navigation.NavigateTo("/Opslaavarenummer");
+    }
+
+    private async Task DeleteProdukt(int Id)
+    {
+
+        await lagerRepository.DeleteItemAsync(Id);
+        await VisBesked("Varen er blevet slettet");
+        data = await lagerRepository.GetAllItemsAsync(); // Opdater data fra lagerRepository
+        sorteretLagerliste = data.OrderBy(p => p.vareTekst).ToList(); // Opdater sorteretLagerliste
+        StateHasChanged();
+
+
+    }
+
+    private async Task VisBesked(string message)
+    {
+        besked = message;
+        StateHasChanged(); // Fortæl UI'et at tilstanden har ændret sig
+        await Task.Delay(1000);
+        besked = string.Empty;
+        StateHasChanged(); // Opdater UI'et igen efter at beskeden er fjernet
+    }
+
+    private async Task UpdateProdukt(Lagermodel item)
+    {
+
+        var uri = Navigation.ToAbsoluteUri($"/create-item?id={item.Id}&update=true").ToString();
+        Navigation.NavigateTo(uri);
+    }
+
 }
+
