@@ -13,7 +13,7 @@
 </div>
 
 <h3>Lager oversigt</h3>
-<h4 style="color:red">@besked</h4>
+<h4 class="besked">@besked</h4>
 
 <div class="table-container">
     <table class="table table-striped col-12">
@@ -123,7 +123,7 @@
     {
         besked = message;
         StateHasChanged(); // Fortæl UI'et at tilstanden har ændret sig
-        await Task.Delay(1000);
+        await Task.Delay(3000);
         besked = string.Empty;
         StateHasChanged(); // Opdater UI'et igen efter at beskeden er fjernet
     }

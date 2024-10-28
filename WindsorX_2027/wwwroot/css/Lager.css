@@ -1,17 +1,21 @@
 ﻿body {
     background-color: lightgray;
-    padding:0px 10px 10px 10px;
+    padding: 0px 0px 0px 0px;
+    margin: 0px 0px 0px 5px;
 }
 
 #dataliste {
     background-color: white;
+    text-align: center;
+    
 }
 
 #listeoverskrift {
-    
     background-color: black;
     position: sticky;
-    top: 50px;
+    top: 70px;
+    text-align: center;
+   
 }
 
 td {
@@ -20,26 +24,40 @@ td {
 
 th {
     color: white;
+   
 }
 
 .top-row {
-    background-color: gray;
+    background-color: black;
     padding: 0px 0px 0px 0px;
-    
+    margin: 0px 0px 0px 0px;
 }
 
 
 .top-menu {
     padding: 0px 0px 0px 0px;
-    margin:0;
-   
+    margin: 0px 0px 0px 0px;
+    top:0px;
 }
 h3 {
     margin: 0px 0px 0px 0px;
-    padding: 5px 10px 10px 10px;
+    padding: 10px 10px 10px 10px;
     height: 50px;
     color: white;
     background-color: blue;
     text-align: center;
+}
+.besked {
+    padding: 10px 10px 10px 10px;
+    margin: 0px 0px 0px 0px;
+    height: 35px;
+    color: red;
+    background-color: blue;
+    text-align:center;
+}
+.indtastvarenummer{
+    color:black;
+    height:50px;
+    font-size:20px;
 }
 

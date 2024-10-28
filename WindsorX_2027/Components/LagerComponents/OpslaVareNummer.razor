@@ -15,12 +15,12 @@
 @if (!string.IsNullOrEmpty(Varenummer))
 {
     <h3>@Message</h3>
-    <div class="row indtastvarenummer">
+    <div class="row ">
         <div class="col-auto">
             <div class="input-group">
-                <input type="text" class="form-control" @bind="varenummer" placeholder="Indtast varenummer">
-                <button class="btn btn-secondary" @onclick="SøgEfterVarenummer">
-                    <i class="oi oi-compass"></i>
+                <input type="text" class="form-control" @bind="varenummer" placeholder="Indtast varenummer" style="background-color:lightblue">
+                <button class="btn btn-primary" @onclick="SøgEfterVarenummer">
+                    <i class="btn btn-success oi oi-compass"></i>
                     Søg
                 </button>
             </div>
@@ -34,9 +34,9 @@ else if (string.IsNullOrEmpty(Varenummer))
     <div class="row">
         <div class="col-auto">
             <div class="input-group">
-                <input type="text" class="form-control" @bind="varenummer" placeholder="Indtast varenummer">
-                <button class="btn btn-secondary" @onclick="SøgEfterVarenummer">
-                    <i class="oi oi-compass"></i>
+                <input type="text" class="form-control" @bind="varenummer" placeholder="Indtast varenummer" style="background-color:lightblue;font-size:20px;text-align:center;width:125px;">
+                <button class="btn btn-primary" @onclick="SøgEfterVarenummer">
+                    <i class="btn btn-success oi oi-compass"></i>
                     Søg
                 </button>
             </div>
@@ -79,7 +79,7 @@ else if (string.IsNullOrEmpty(Varenummer))
 <div class="row">
     <div class="my-button">
         <button class="btn btn-primary" @onclick="NavigateToLagerliste">
-            <i class="oi oi-list btn btn-secondary"></i>
+            <i class="oi oi-list btn btn-success"></i>
             Lager Liste
         </button>
     </div>
