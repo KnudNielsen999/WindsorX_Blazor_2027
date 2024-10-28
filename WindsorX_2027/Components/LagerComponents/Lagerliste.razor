@@ -1,10 +1,16 @@
-﻿@page "/Displaylager"
+﻿
+@page "/Displaylager"
 @using WindsorX_2027.LagerModel
 @using WindsorX_2027.LagerRepositoryMappe
 @inject ILagerRepository lagerRepository
 @inject NavigationManager Navigation
 <link href="\css\Lager.css" rel="stylesheet" />
 
+
+
+<div class="top-menu">
+    <TopMenuBootstrap />
+</div>
 
 <h3>Lager oversigt</h3>
 <h4 style="color:red">@besked</h4>
