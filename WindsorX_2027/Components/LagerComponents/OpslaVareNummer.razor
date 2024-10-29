@@ -74,6 +74,35 @@ else if (string.IsNullOrEmpty(Varenummer))
         </tbody>
     }
 </table>
+<table class="table table-striped">
+    <thead>
+        <tr id="listeoverskrift">
+            <th>Salgs Pris</th>
+            <th>Location 1</th>
+            <th>Location 2</th>
+            <th>Opr dato:</th>
+            <th>Sidste Lager Bev dato </th>
+            <th>Lager optalt dato. </th>
+            <th>Sidste Bestillings dato </th>
+        </tr>
+    </thead>
+
+
+    @foreach (var item in fundenvarenummer)
+    {
+        <tbody>
+            <tr id="dataliste">
+                <td id="talformat">@string.Format("{0:F2}", item.salgsPris)</td>
+                <td>@item.location1</td>
+                <td>@item.location2</td>
+                <td>@item.oprDato</td>
+                <td>@item.sidsteLagerBevDato</td>
+                <td>@item.lagerOptaltDato</td>
+                <td>@item.sidsteBesstillingsDato</td>
+            </tr>
+        </tbody>
+    }
+</table>
 
 
 <div class="row">

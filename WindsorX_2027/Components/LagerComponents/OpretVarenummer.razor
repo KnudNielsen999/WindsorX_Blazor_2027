@@ -62,6 +62,11 @@
             <InputNumber class="form-control" @bind-Value="viewModel.kostPris" />
             <ValidationMessage For="@(() => viewModel.kostPris)" />
         </div>
+        <div class="form-group">
+            <label>Salgs Pris:</label>
+            <InputNumber class="form-control" @bind-Value="viewModel.salgsPris" />
+            <ValidationMessage For="@(() => viewModel.salgsPris)" />
+        </div>
 
         <div class="form-group">
             <label>Max Lager:</label>
@@ -74,7 +79,16 @@
             <InputNumber class="form-control" @bind-Value="viewModel.minLager" />
             <ValidationMessage For="@(() => viewModel.minLager)" />
         </div>
-
+        <div class="form-group">
+            <label>Location 1:</label>
+            <InputText class="form-control" @bind-Value="viewModel.location1" />
+            <ValidationMessage For="@(() => viewModel.location1)" />
+        </div>
+        <div class="form-group">
+            <label>Location 2:</label>
+            <InputText class="form-control" @bind-Value="viewModel.location2" />
+            <ValidationMessage For="@(() => viewModel.location2)" />
+        </div>
 
         <div class="row">
             <div class="col-auto my-button">

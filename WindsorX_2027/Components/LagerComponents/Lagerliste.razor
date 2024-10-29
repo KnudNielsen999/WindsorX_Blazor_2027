@@ -24,11 +24,15 @@
                 <th id="talformat">Vare Mængde</th>
                 <th id="talformat">Enheder</th>
                 <th id="talformat">Kost pris</th>
+                <th id="talformat">Salgs Pris</th>
                 <th id="talformat">Max lager</th>
                 <th id="talformat">Min lager</th>
+                <th id="talformat">Location 1</th>
+                <th id="talformat">Location 2</th>
                 <th>Funktion</th>
                 <th></th>
             </tr>
+            
         </thead>
 
 
@@ -42,8 +46,11 @@
                     <td id="talformat">@string.Format("{0:F2}", item.vareMaengde)</td>
                     <td id="talformat">@item.enheder</td>
                     <td id="talformat">@string.Format("{0:F2}", item.kostPris)</td>
+                    <td id="talformat">@string.Format("{0:F2}", item.salgsPris)</td>
                     <td id="talformat">@string.Format("{0:F2}", item.maxLager)</td>
                     <td id="talformat">@string.Format("{0:F2}", item.minLager)</td>
+                    <td>@item.location1</td>
+                    <td>@item.location2</td>
                     <td class="my-button-cell">
                         <button class="btn btn-sm btn-danger text-white" @onclick="(e) => DeleteProdukt(item.Id)">
                             <i class="oi oi-trash"></i> Slet
@@ -61,6 +68,8 @@
 
     </table>
 </div>
+
+
 
 <div class="row button-container">
     <div class="col-auto my-button">
