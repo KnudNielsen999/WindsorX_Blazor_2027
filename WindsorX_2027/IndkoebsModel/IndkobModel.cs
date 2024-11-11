@@ -10,7 +10,7 @@ namespace WindsorX_2027.IndkoebsModel
         public int Id { get; set; }
         public string? ordreNummer { get; set; }
         public string? kundeNummer { get; set; }
-        public DateTime ordreDato { get; set; }
+        public DateTime ordreDato { get; set; } = DateTime.Now;
         public string? ordreDetaljer { get; set; }
         public string? referenceDetaljer { get; set; }
         public string? leverandorNummer { get; set; }

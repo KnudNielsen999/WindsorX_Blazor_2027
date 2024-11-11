@@ -11,62 +11,105 @@
     <DataAnnotationsValidator />
     <ValidationSummary />
 
-    <h4>Indkøbsoplysninger</h4>
-    <div>
-        <label>Ordre Nummer:</label>
-        <InputText @bind-Value="indkob.ordreNummer" />
-    </div>
-    <div>
-        <label>Kunde Nummer:</label>
-        <InputText @bind-Value="indkob.kundeNummer" />
-    </div>
-    <div>
-        <label>Ordre Dato:</label>
-        <InputDate @bind-Value="indkob.ordreDato" />
-    </div>
-    <div>
-        <label>Ordre Detaljer:</label>
-        <InputTextArea @bind-Value="indkob.ordreDetaljer" />
-    </div>
-    <div>
-        <label>Reference Detaljer:</label>
-        <InputTextArea @bind-Value="indkob.referenceDetaljer" />
-    </div>
-    <div>
-        <label>Leverandør Nummer:</label>
-        <InputText @bind-Value="indkob.leverandorNummer" />
-    </div>
-
-    <h4>Ordrelinjer</h4>
-    @foreach (var ordreLinje in indkob.ordreLinjer)
-    {
-        <div style="border: 1px solid #ccc; padding: 10px; margin-bottom: 10px;">
-            <label>Vare Nummer:</label>
-            <InputText @bind-Value="ordreLinje.vareNummer" />
-            <button type="button" @onclick="() => OnVarenummerChanged(ordreLinje)">tjek varenummer</button>
-            <label>Vare Tekst:</label>
-            <InputText @bind-Value="ordreLinje.vareTekst" Disabled="true" />
-            <label>Antal:</label>
-            <InputNumber @bind-Value="ordreLinje.ordreAntal" />
-            <label>Enheder:</label>
-            <InputText @bind-Value="ordreLinje.enheder" Disabled="true" />
-            <label>Kost Pris:</label>
-            <InputNumber @bind-Value="ordreLinje.kostPris" Disabled="true" />
-            <button type="button" @onclick="() => RemoveOrdreLinje(ordreLinje)">Fjern</button>
+    <div class="container">
+        <h4>Indkøbsoplysninger</h4>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Ordre Nummer:</label>
+            <div class="col-sm-10">
+                <InputText class="form-control" @bind-Value="indkob.ordreNummer" />
+            </div>
         </div>
-    }
 
-    <button type="button" @onclick="AddOrdreLinje">Tilføj Ordrelinje</button>
-    <br /><br />
-    <button type="submit">Gem Indkøbsordre</button>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Kunde Nummer:</label>
+            <div class="col-sm-10">
+                <InputText class="form-control" @bind-Value="indkob.kundeNummer" />
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Ordre Dato:</label>
+            <div class="col-sm-10">
+                <InputDate class="form-control" @bind-Value="indkob.ordreDato" />
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Ordre Detaljer:</label>
+            <div class="col-sm-10">
+                <InputTextArea class="form-control" @bind-Value="indkob.ordreDetaljer" />
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Reference Detaljer:</label>
+            <div class="col-sm-10">
+                <InputTextArea class="form-control" @bind-Value="indkob.referenceDetaljer" />
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Leverandør Nummer:</label>
+            <div class="col-sm-10">
+                <InputText class="form-control" @bind-Value="indkob.leverandorNummer" />
+            </div>
+        </div>
+
+        <h4>Ordrelinjer</h4>
+        @foreach (var ordreLinje in indkob.ordreLinjer)
+        {
+            <div class="border rounded p-3 mb-3">
+                <div class="form-group row">
+                    <div class="col-sm-2">
+                        <label>Vare Nummer:</label>
+                        <InputText class="form-control" @bind-Value="ordreLinje.vareNummer" />
+                    </div>
+                    <div class="col-sm-2">
+                        <label>Vare Tekst:</label>
+                        <InputText class="form-control" @bind-Value="ordreLinje.vareTekst" Disabled="true" />
+                    </div>
+                    <div class="col-sm-1">
+                        <label>Antal:</label>
+                        <InputNumber class="form-control" @bind-Value="ordreLinje.ordreAntal" />
+                    </div>
+                    <div class="col-sm-1">
+                        <label>Enheder:</label>
+                        <InputText class="form-control" @bind-Value="ordreLinje.enheder" Disabled="true" />
+                    </div>
+                    <div class="col-sm-2">
+                        <label>Kost Pris:</label>
+                        <InputNumber class="form-control" @bind-Value="ordreLinje.kostPris" Disabled="true" />
+                    </div>
+
+                    <div class="col d-flex justify-content-center align-items-center">
+                        <button type="button" class="btn btn-primary w-100 h-75" @onclick="() => OnVarenummerChanged(ordreLinje)">Tjek Varenummer</button>
+                    </div>
+                    <div class="col d-flex justify-content-center align-items-center px-0">
+                        <button type="button" class="btn btn-danger w-100 h-75" @onclick="() => RemoveOrdreLinje(ordreLinje)">Fjern</button>
+                    </div>
+
+
+
+                </div>
+            </div>
+        }
+
+        <div class="col-2 align-items-start">
+            <button type="button" class="btn btn-secondary py-2 my-2 w-100  " @onclick="AddOrdreLinje">Tilføj Ordrelinje</button>
+        </div>
+
+        <div class="col-2 align-items-start">
+            <button type="submit" class="btn btn-success  py-2 my-2 w-100">Gem Indkøbsordre</button>
+        </div>
+
+    </div>
 </EditForm>
 
 @if (errorMessage != null)
 {
-    <p style="color:red;">@errorMessage</p>
+    <p class="text-danger">@errorMessage</p>
 }
-@vistekst
-
+<p>@vistekst</p>
 
 @code {
     private IndkobModel? indkob = new IndkobModel();
@@ -87,11 +130,9 @@
     {
         try
         {
-            // Gem indkøbsordren ved hjælp af IndkobsRepository
+            
             await IndkobsRepository.CreateIndkobAsync(indkob);
             vistekst = "Indkøbsordre gemt!";
-
-            // Ryd formularen efter gemning
             indkob = new IndkobModel();
             errorMessage = null;
         }
@@ -104,10 +145,7 @@
 
     private async Task OnVarenummerChanged(OrdreModel ordreLinje)
     {
-       
-
         var vare = await LagerRepository.GetVareByVarenummerAsync(ordreLinje.vareNummer);
-
         if (vare != null)
         {
             ordreLinje.vareTekst = vare.vareTekst;
@@ -119,9 +157,6 @@
         {
             errorMessage = "Varenummer ikke fundet i lageret.";
         }
-
-       
         StateHasChanged();
-        return;
     }
 }
