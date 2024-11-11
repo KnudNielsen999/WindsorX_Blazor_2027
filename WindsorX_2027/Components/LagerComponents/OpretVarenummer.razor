@@ -106,7 +106,7 @@
 
 @code {
     private DisplayLagerData viewModel = new DisplayLagerData();
-    private string errorMessage;
+    private string? errorMessage;
     private bool isUpdateMode = false;
     private string PageTitle => isUpdateMode ? "Opdater Vare" : "Opret Varenummer";
     private int? itemId; // Tilføjet for at holde ID for den vare, der opdateres

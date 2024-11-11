@@ -16,12 +16,26 @@ namespace WindsorX_2027.DB_Entity
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<IndkobModel>()
-                .HasMany(i => i.ordreLinjer)   // Brug ordreLinjer, som er en liste af OrdreModel
-                .WithOne()                      // Definer relateret entitet
-                .HasForeignKey(o => o.IndkobModelId);  // Tilføj fremmednøgle (kræver IndkobModelId i OrdreModel)
-        }
+           modelBuilder.Entity<IndkobModel>().HasData(
+               new IndkobModel { Id=1,ordreNummer="1",kundeNummer="1",leverandorNummer="1"},
+               new IndkobModel { Id = 2, ordreNummer = "1", kundeNummer = "1", leverandorNummer = "1" },
+                new IndkobModel { Id = 3, ordreNummer = "2", kundeNummer = "1", leverandorNummer = "1" },
+               new IndkobModel { Id = 4, ordreNummer = "2", kundeNummer = "1", leverandorNummer = "1" }
+               );
+            modelBuilder.Entity<Lagermodel>().HasData(
+                new Lagermodel { Id=3,vareNummer="2", vareTekst="Motor",vareMaengde=1,enheder="stk", kostPris=2500.00, maxLager=1, minLager=0},
+                new Lagermodel { Id = 4, vareNummer = "4", vareTekst = "gevind", vareMaengde = 5, enheder = "mtr", kostPris = 150.00, maxLager = 5, minLager = 1 }
+                );
 
+
+            modelBuilder.Entity<IndkobModel>()
+           .HasMany(i => i.ordreLinjer)
+           .WithOne(o => o.IndkobModel)
+           .HasForeignKey(o => o.IndkobModelId)
+           .OnDelete(DeleteBehavior.Cascade);
+
+
+        }
 
     }
 

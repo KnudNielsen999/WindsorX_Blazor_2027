@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using WindsorX_2027.LagerModel;
 
 namespace WindsorX_2027.IndkoebsModel
@@ -14,23 +15,31 @@ namespace WindsorX_2027.IndkoebsModel
         public string? referenceDetaljer { get; set; }
         public string? leverandorNummer { get; set; }
 
-        public List<OrdreModel> ordreLinjer { get; set; } = new List<OrdreModel>();
-
+        // Liste af ordrelinjer som er knyttet til dette indkøb
+        public List<OrdreModel?> ordreLinjer { get; set; } = new List<OrdreModel?>();
     }
+
     public class OrdreModel
     {
         public int Id { get; set; }
-       
         public string? leverandørNummer { get; set; }
-        public Lagermodel? vareNummer { get; set; }
-        public Lagermodel? vareTekst { get; set; }
+        public string? vareNummer { get; set; }
+        public string? vareTekst { get; set; }
         public double? ordreAntal { get; set; }
-        public Lagermodel?  enheder { get; set; }
-        public Lagermodel? kostPris { get; set; }
-        public int IndkobModelId { get; set; }       // Fremmednøgle
-        public IndkobModel Indkob { get; set; }      // Navigationsejendom
+        public string? enheder { get; set; }
+        public double? kostPris { get; set; }
 
+        // Foreign key til IndkobModel
+        public int? IndkobModelId { get; set; }
+
+        // Navigation property til at referere til IndkobModel
+        [ForeignKey("IndkobModelId")]
+        public IndkobModel? IndkobModel { get; set; }
     }
+
+
+
+
     public class LeverandorReg
     {
         public int Id { get; set; }

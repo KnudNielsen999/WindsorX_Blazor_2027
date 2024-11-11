@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WindsorX_2027.DB_Entity;
 
@@ -11,9 +12,11 @@ using WindsorX_2027.DB_Entity;
 namespace WindsorX_2027.Migrations
 {
     [DbContext(typeof(Entity_Database))]
-    partial class Entity_DatabaseModelSnapshot : ModelSnapshot
+    [Migration("20241108083032_demo3")]
+    partial class demo3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -42,7 +45,7 @@ namespace WindsorX_2027.Migrations
                     b.Property<string>("ordreDetaljer")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ordreNummer")
+                    b.Property<string>("ordreNummerId")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("referenceDetaljer")
@@ -59,7 +62,7 @@ namespace WindsorX_2027.Migrations
                             kundeNummer = "1",
                             leverandorNummer = "1",
                             ordreDato = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ordreNummer = "1"
+                            ordreNummerId = "1"
                         },
                         new
                         {
@@ -67,7 +70,7 @@ namespace WindsorX_2027.Migrations
                             kundeNummer = "1",
                             leverandorNummer = "1",
                             ordreDato = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ordreNummer = "1"
+                            ordreNummerId = "1"
                         },
                         new
                         {
@@ -75,7 +78,7 @@ namespace WindsorX_2027.Migrations
                             kundeNummer = "1",
                             leverandorNummer = "1",
                             ordreDato = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ordreNummer = "2"
+                            ordreNummerId = "2"
                         },
                         new
                         {
@@ -83,7 +86,7 @@ namespace WindsorX_2027.Migrations
                             kundeNummer = "1",
                             leverandorNummer = "1",
                             ordreDato = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ordreNummer = "2"
+                            ordreNummerId = "2"
                         });
                 });
 
@@ -141,7 +144,7 @@ namespace WindsorX_2027.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("IndkobModelId")
+                    b.Property<int>("IndkobModelId")
                         .HasColumnType("int");
 
                     b.Property<string>("enheder")
@@ -155,6 +158,9 @@ namespace WindsorX_2027.Migrations
 
                     b.Property<double?>("ordreAntal")
                         .HasColumnType("float");
+
+                    b.Property<string>("ordreNummerId")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("vareNummer")
                         .HasColumnType("nvarchar(max)");
@@ -256,7 +262,8 @@ namespace WindsorX_2027.Migrations
                     b.HasOne("WindsorX_2027.IndkoebsModel.IndkobModel", "IndkobModel")
                         .WithMany("ordreLinjer")
                         .HasForeignKey("IndkobModelId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("IndkobModel");
                 });

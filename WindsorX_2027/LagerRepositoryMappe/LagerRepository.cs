@@ -20,6 +20,11 @@
             await _context.SaveChangesAsync();
         }
 
+        public async Task<Lagermodel?> GetVareByVarenummerAsync(string varenummer)
+        {
+            return await _context.LagerData.FirstOrDefaultAsync(v => v.vareNummer == varenummer);
+        }
+
         // Hent alle varenumre
         public async Task<List<Lagermodel>> GetAllItemsAsync()
         {
@@ -27,7 +32,7 @@
         }
 
         // Hent et varenummer efter ID
-        public async Task<Lagermodel> GetItemByIdAsync(int id)
+        public async Task<Lagermodel?> GetItemByIdAsync(int? id)
         {
             return await _context.LagerData.FindAsync(id);
         }

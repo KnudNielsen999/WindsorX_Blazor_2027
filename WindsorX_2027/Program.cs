@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Components.Web;
 using Microsoft.EntityFrameworkCore;
 using WindsorX_2027.Data;
 using WindsorX_2027.DB_Entity;
+using WindsorX_2027.IndkoebsRepositoryMappe;
 using WindsorX_2027.LagerRepositoryMappe;
 
 namespace WindsorX_2027
@@ -23,6 +24,8 @@ namespace WindsorX_2027
                 options.UseSqlServer(connectionString));
 
             builder.Services.AddTransient<ILagerRepository, LagerRepository>();
+            builder.Services.AddTransient<IIndkobRepository, IndkobRepository>();
+
             builder.Services.AddAutoMapper(typeof(LagerProfile));
 
             var app = builder.Build();

@@ -1,0 +1,127 @@
+﻿@page "/indkob"
+@inject IIndkobRepository IndkobsRepository
+@inject ILagerRepository LagerRepository
+@using WindsorX_2027.IndkoebsModel
+@using WindsorX_2027.IndkoebsRepositoryMappe
+@using WindsorX_2027.LagerRepositoryMappe
+
+<h3>Opret Indkøbsordre</h3>
+
+<EditForm Model="indkob" OnValidSubmit="SaveIndkob">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <h4>Indkøbsoplysninger</h4>
+    <div>
+        <label>Ordre Nummer:</label>
+        <InputText @bind-Value="indkob.ordreNummer" />
+    </div>
+    <div>
+        <label>Kunde Nummer:</label>
+        <InputText @bind-Value="indkob.kundeNummer" />
+    </div>
+    <div>
+        <label>Ordre Dato:</label>
+        <InputDate @bind-Value="indkob.ordreDato" />
+    </div>
+    <div>
+        <label>Ordre Detaljer:</label>
+        <InputTextArea @bind-Value="indkob.ordreDetaljer" />
+    </div>
+    <div>
+        <label>Reference Detaljer:</label>
+        <InputTextArea @bind-Value="indkob.referenceDetaljer" />
+    </div>
+    <div>
+        <label>Leverandør Nummer:</label>
+        <InputText @bind-Value="indkob.leverandorNummer" />
+    </div>
+
+    <h4>Ordrelinjer</h4>
+    @foreach (var ordreLinje in indkob.ordreLinjer)
+    {
+        <div style="border: 1px solid #ccc; padding: 10px; margin-bottom: 10px;">
+            <label>Vare Nummer:</label>
+            <InputText @bind-Value="ordreLinje.vareNummer" />
+            <button type="button" @onclick="() => OnVarenummerChanged(ordreLinje)">tjek varenummer</button>
+            <label>Vare Tekst:</label>
+            <InputText @bind-Value="ordreLinje.vareTekst" Disabled="true" />
+            <label>Antal:</label>
+            <InputNumber @bind-Value="ordreLinje.ordreAntal" />
+            <label>Enheder:</label>
+            <InputText @bind-Value="ordreLinje.enheder" Disabled="true" />
+            <label>Kost Pris:</label>
+            <InputNumber @bind-Value="ordreLinje.kostPris" Disabled="true" />
+            <button type="button" @onclick="() => RemoveOrdreLinje(ordreLinje)">Fjern</button>
+        </div>
+    }
+
+    <button type="button" @onclick="AddOrdreLinje">Tilføj Ordrelinje</button>
+    <br /><br />
+    <button type="submit">Gem Indkøbsordre</button>
+</EditForm>
+
+@if (errorMessage != null)
+{
+    <p style="color:red;">@errorMessage</p>
+}
+@vistekst
+
+
+@code {
+    private IndkobModel? indkob = new IndkobModel();
+    private string? errorMessage;
+    private string? vistekst;
+
+    private void AddOrdreLinje()
+    {
+        indkob?.ordreLinjer.Add(new OrdreModel());
+    }
+
+    private void RemoveOrdreLinje(OrdreModel ordreLinje)
+    {
+        indkob?.ordreLinjer.Remove(ordreLinje);
+    }
+
+    private async Task SaveIndkob()
+    {
+        try
+        {
+            // Gem indkøbsordren ved hjælp af IndkobsRepository
+            await IndkobsRepository.CreateIndkobAsync(indkob);
+            vistekst = "Indkøbsordre gemt!";
+
+            // Ryd formularen efter gemning
+            indkob = new IndkobModel();
+            errorMessage = null;
+        }
+        catch (Exception ex)
+        {
+            errorMessage = $"Der opstod en fejl under gemning: {ex.Message}";
+            Console.WriteLine(errorMessage);
+        }
+    }
+
+    private async Task OnVarenummerChanged(OrdreModel ordreLinje)
+    {
+        vistekst = $"Før opslag: VareNummer: {ordreLinje.vareNummer}, VareTekst: {ordreLinje.vareTekst}";
+
+        var vare = await LagerRepository.GetVareByVarenummerAsync(ordreLinje.vareNummer);
+
+        if (vare != null)
+        {
+            ordreLinje.vareTekst = vare.vareTekst;
+            ordreLinje.enheder = vare.enheder;
+            ordreLinje.kostPris = vare.kostPris;
+            ordreLinje.leverandørNummer = indkob.leverandorNummer;
+        }
+        else
+        {
+            errorMessage = "Varenummer ikke fundet i lageret.";
+        }
+
+        vistekst = $"Efter opslag: VareNummer: {ordreLinje.vareNummer}, VareTekst: {ordreLinje.vareTekst}";
+        StateHasChanged();
+        return;
+    }
+}

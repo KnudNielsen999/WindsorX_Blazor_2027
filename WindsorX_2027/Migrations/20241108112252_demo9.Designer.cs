@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WindsorX_2027.DB_Entity;
 
@@ -11,9 +12,11 @@ using WindsorX_2027.DB_Entity;
 namespace WindsorX_2027.Migrations
 {
     [DbContext(typeof(Entity_Database))]
-    partial class Entity_DatabaseModelSnapshot : ModelSnapshot
+    [Migration("20241108112252_demo9")]
+    partial class demo9
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -255,8 +258,7 @@ namespace WindsorX_2027.Migrations
                 {
                     b.HasOne("WindsorX_2027.IndkoebsModel.IndkobModel", "IndkobModel")
                         .WithMany("ordreLinjer")
-                        .HasForeignKey("IndkobModelId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("IndkobModelId");
 
                     b.Navigation("IndkobModel");
                 });

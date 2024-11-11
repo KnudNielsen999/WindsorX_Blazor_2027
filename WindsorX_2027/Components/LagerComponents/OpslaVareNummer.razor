@@ -117,7 +117,7 @@ else if (string.IsNullOrEmpty(Varenummer))
 @code {
     private List<Lagermodel> data = new List<Lagermodel>();
     private List<Lagermodel> fundenvarenummer = new List<Lagermodel>();
-    public string varenummer { get; set; }
+    public string? varenummer { get; set; }
     [Parameter]
     public string Message { get; set; }
     [Parameter]
