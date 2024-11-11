@@ -131,8 +131,10 @@
     {
         try
         {
-            
+
             await IndkobsRepository.CreateIndkobAsync(indkob);
+            await OpdaterLagerData(indkob);
+
             vistekst = "Indkøbsordre gemt!";
             indkob = new IndkobModel();
             errorMessage = null;
@@ -160,4 +162,25 @@
         }
         StateHasChanged();
     }
+    private async Task OpdaterLagerData(IndkobModel indkob)
+    {
+        foreach (var ordreLinje in indkob.ordreLinjer)
+        {
+            // Hent varen baseret på vareNummer i ordreLinje
+            var vareopdatering = await LagerRepository.GetVareByVarenummerAsync(ordreLinje.vareNummer);
+
+            // Hvis varen findes i lageret, opdater bestillingsdatoen
+            if (vareopdatering != null)
+            {
+                vareopdatering.sidsteBesstillingsDato = indkob.ordreDato;
+                await LagerRepository.UpdateItemAsync(vareopdatering);
+            }
+            else
+            {
+                errorMessage = $"Varenummer {ordreLinje.vareNummer} blev ikke fundet i lageret.";
+                Console.WriteLine(errorMessage);
+            }
+        }
+    }
+
 }
