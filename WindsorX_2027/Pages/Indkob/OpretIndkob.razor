@@ -104,7 +104,7 @@
 
     private async Task OnVarenummerChanged(OrdreModel ordreLinje)
     {
-        vistekst = $"Før opslag: VareNummer: {ordreLinje.vareNummer}, VareTekst: {ordreLinje.vareTekst}";
+       
 
         var vare = await LagerRepository.GetVareByVarenummerAsync(ordreLinje.vareNummer);
 
@@ -120,7 +120,7 @@
             errorMessage = "Varenummer ikke fundet i lageret.";
         }
 
-        vistekst = $"Efter opslag: VareNummer: {ordreLinje.vareNummer}, VareTekst: {ordreLinje.vareTekst}";
+       
         StateHasChanged();
         return;
     }
