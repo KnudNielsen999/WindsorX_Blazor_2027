@@ -21,4 +21,8 @@
 	
 	</ItemGroup>
 
+	<ItemGroup>
+	  <ProjectReference Include="..\BaggrundsDataLibrary\BaggrundsDataLibrary.csproj" />
+	</ItemGroup>
+
 </Project>

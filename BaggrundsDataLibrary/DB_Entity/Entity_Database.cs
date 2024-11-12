@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using BaggrundsDataLibrary.LagerTransAktioner;
+using Microsoft.EntityFrameworkCore;
 using WindsorX_2027.IndkoebsModel;
 using WindsorX_2027.LagerModel;
 
@@ -13,6 +14,7 @@ namespace WindsorX_2027.DB_Entity
         public DbSet<IndkobModel> IndkobsOrdre { get; set; }
         public DbSet<OrdreModel> OrdreLinjer { get; set; }
         public DbSet<LeverandorReg> Leverandorer { get; set; }
+        public DbSet<TransaktionerModel> Transaktioner {  get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

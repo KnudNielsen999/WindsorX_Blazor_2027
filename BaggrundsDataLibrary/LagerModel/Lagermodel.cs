@@ -15,7 +15,7 @@
         public string? location2 { get; set; }
         public DateTime? oprDato { get; set; }
         public DateTime? sidsteLagerBevDato { get; set; }
-        public DateTime? sidsteBesstillingsDato { get; set; }
+        public DateTime? sidsteBestillingsDato { get; set; }
         public double? bestiltAntal { get; set; }
         public DateTime? lagerOptaltDato { get; set; }
     }

@@ -175,7 +175,8 @@
             // Hvis varen findes i lageret, opdater bestillingsdatoen
             if (vareopdatering != null)
             {
-                vareopdatering.sidsteBesstillingsDato = indkob.ordreDato;
+                vareopdatering.sidsteBestillingsDato = indkob.ordreDato;
+                vareopdatering.bestiltAntal =vareopdatering.bestiltAntal + ordreLinje.ordreAntal;
                 await LagerRepository.UpdateItemAsync(vareopdatering);
             }
             else

@@ -9,11 +9,11 @@ using WindsorX_2027.DB_Entity;
 
 #nullable disable
 
-namespace WindsorX_2027.Migrations
+namespace BaggrundsDataLibrary.Migrations
 {
     [DbContext(typeof(Entity_Database))]
-    [Migration("20241107085618_demo1")]
-    partial class demo1
+    [Migration("20241112084126_demo12")]
+    partial class demo12
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -61,7 +61,7 @@ namespace WindsorX_2027.Migrations
                             Id = 1,
                             kundeNummer = "1",
                             leverandorNummer = "1",
-                            ordreDato = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ordreDato = new DateTime(2024, 11, 12, 9, 41, 26, 45, DateTimeKind.Local).AddTicks(6641),
                             ordreNummer = "1"
                         },
                         new
@@ -69,7 +69,7 @@ namespace WindsorX_2027.Migrations
                             Id = 2,
                             kundeNummer = "1",
                             leverandorNummer = "1",
-                            ordreDato = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ordreDato = new DateTime(2024, 11, 12, 9, 41, 26, 45, DateTimeKind.Local).AddTicks(6688),
                             ordreNummer = "1"
                         },
                         new
@@ -77,7 +77,7 @@ namespace WindsorX_2027.Migrations
                             Id = 3,
                             kundeNummer = "1",
                             leverandorNummer = "1",
-                            ordreDato = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ordreDato = new DateTime(2024, 11, 12, 9, 41, 26, 45, DateTimeKind.Local).AddTicks(6690),
                             ordreNummer = "2"
                         },
                         new
@@ -85,7 +85,7 @@ namespace WindsorX_2027.Migrations
                             Id = 4,
                             kundeNummer = "1",
                             leverandorNummer = "1",
-                            ordreDato = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ordreDato = new DateTime(2024, 11, 12, 9, 41, 26, 45, DateTimeKind.Local).AddTicks(6692),
                             ordreNummer = "2"
                         });
                 });
@@ -144,7 +144,7 @@ namespace WindsorX_2027.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("IndkobModelId")
+                    b.Property<int?>("IndkobModelId")
                         .HasColumnType("int");
 
                     b.Property<string>("enheder")
@@ -158,9 +158,6 @@ namespace WindsorX_2027.Migrations
 
                     b.Property<double?>("ordreAntal")
                         .HasColumnType("float");
-
-                    b.Property<string>("ordrenummer")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("vareNummer")
                         .HasColumnType("nvarchar(max)");
@@ -213,7 +210,7 @@ namespace WindsorX_2027.Migrations
                     b.Property<double?>("salgsPris")
                         .HasColumnType("float");
 
-                    b.Property<DateTime?>("sidsteBesstillingsDato")
+                    b.Property<DateTime?>("sidsteBestillingsDato")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime?>("sidsteLagerBevDato")
@@ -231,6 +228,30 @@ namespace WindsorX_2027.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("LagerData");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 3,
+                            enheder = "stk",
+                            kostPris = 2500.0,
+                            maxLager = 1.0,
+                            minLager = 0.0,
+                            vareMaengde = 1.0,
+                            vareNummer = "2",
+                            vareTekst = "Motor"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            enheder = "mtr",
+                            kostPris = 150.0,
+                            maxLager = 5.0,
+                            minLager = 1.0,
+                            vareMaengde = 5.0,
+                            vareNummer = "4",
+                            vareTekst = "gevind"
+                        });
                 });
 
             modelBuilder.Entity("WindsorX_2027.IndkoebsModel.OrdreModel", b =>
@@ -238,8 +259,7 @@ namespace WindsorX_2027.Migrations
                     b.HasOne("WindsorX_2027.IndkoebsModel.IndkobModel", "IndkobModel")
                         .WithMany("ordreLinjer")
                         .HasForeignKey("IndkobModelId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("IndkobModel");
                 });
