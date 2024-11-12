@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace BaggrundsDataLibrary.Migrations
 {
     /// <inheritdoc />
-    public partial class demo12 : Migration
+    public partial class demo : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -82,6 +82,25 @@ namespace BaggrundsDataLibrary.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Transaktioner",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ProduktNummer = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ProduktNavn = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ProduktAntal = table.Column<double>(type: "float", nullable: true),
+                    TransaktionsDato = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    TransaktionsType = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    OrdreNummer = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    BrugerId = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Transaktioner", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "OrdreLinjer",
                 columns: table => new
                 {
@@ -111,10 +130,10 @@ namespace BaggrundsDataLibrary.Migrations
                 columns: new[] { "Id", "kundeNummer", "leverandorNummer", "ordreDato", "ordreDetaljer", "ordreNummer", "referenceDetaljer" },
                 values: new object[,]
                 {
-                    { 1, "1", "1", new DateTime(2024, 11, 12, 9, 41, 26, 45, DateTimeKind.Local).AddTicks(6641), null, "1", null },
-                    { 2, "1", "1", new DateTime(2024, 11, 12, 9, 41, 26, 45, DateTimeKind.Local).AddTicks(6688), null, "1", null },
-                    { 3, "1", "1", new DateTime(2024, 11, 12, 9, 41, 26, 45, DateTimeKind.Local).AddTicks(6690), null, "2", null },
-                    { 4, "1", "1", new DateTime(2024, 11, 12, 9, 41, 26, 45, DateTimeKind.Local).AddTicks(6692), null, "2", null }
+                    { 1, "1", "1", new DateTime(2024, 11, 12, 11, 8, 39, 709, DateTimeKind.Local).AddTicks(5241), null, "1", null },
+                    { 2, "1", "1", new DateTime(2024, 11, 12, 11, 8, 39, 709, DateTimeKind.Local).AddTicks(5283), null, "1", null },
+                    { 3, "1", "1", new DateTime(2024, 11, 12, 11, 8, 39, 709, DateTimeKind.Local).AddTicks(5285), null, "2", null },
+                    { 4, "1", "1", new DateTime(2024, 11, 12, 11, 8, 39, 709, DateTimeKind.Local).AddTicks(5287), null, "2", null }
                 });
 
             migrationBuilder.InsertData(
@@ -122,8 +141,8 @@ namespace BaggrundsDataLibrary.Migrations
                 columns: new[] { "Id", "bestiltAntal", "enheder", "kostPris", "lagerOptaltDato", "location1", "location2", "maxLager", "minLager", "oprDato", "salgsPris", "sidsteBestillingsDato", "sidsteLagerBevDato", "vareMaengde", "vareNummer", "vareTekst" },
                 values: new object[,]
                 {
-                    { 3, null, "stk", 2500.0, null, null, null, 1.0, 0.0, null, null, null, null, 1.0, "2", "Motor" },
-                    { 4, null, "mtr", 150.0, null, null, null, 5.0, 1.0, null, null, null, null, 5.0, "4", "gevind" }
+                    { 3, 0.0, "stk", 2500.0, null, null, null, 1.0, 0.0, null, null, null, null, 1.0, "2", "Motor" },
+                    { 4, 0.0, "mtr", 150.0, null, null, null, 5.0, 1.0, null, null, null, null, 5.0, "4", "gevind" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -143,6 +162,9 @@ namespace BaggrundsDataLibrary.Migrations
 
             migrationBuilder.DropTable(
                 name: "OrdreLinjer");
+
+            migrationBuilder.DropTable(
+                name: "Transaktioner");
 
             migrationBuilder.DropTable(
                 name: "IndkobsOrdre");

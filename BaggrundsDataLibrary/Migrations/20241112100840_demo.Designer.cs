@@ -12,8 +12,8 @@ using WindsorX_2027.DB_Entity;
 namespace BaggrundsDataLibrary.Migrations
 {
     [DbContext(typeof(Entity_Database))]
-    [Migration("20241112093117_demo1")]
-    partial class demo1
+    [Migration("20241112100840_demo")]
+    partial class demo
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -95,7 +95,7 @@ namespace BaggrundsDataLibrary.Migrations
                             Id = 1,
                             kundeNummer = "1",
                             leverandorNummer = "1",
-                            ordreDato = new DateTime(2024, 11, 12, 10, 31, 17, 68, DateTimeKind.Local).AddTicks(2045),
+                            ordreDato = new DateTime(2024, 11, 12, 11, 8, 39, 709, DateTimeKind.Local).AddTicks(5241),
                             ordreNummer = "1"
                         },
                         new
@@ -103,7 +103,7 @@ namespace BaggrundsDataLibrary.Migrations
                             Id = 2,
                             kundeNummer = "1",
                             leverandorNummer = "1",
-                            ordreDato = new DateTime(2024, 11, 12, 10, 31, 17, 68, DateTimeKind.Local).AddTicks(2089),
+                            ordreDato = new DateTime(2024, 11, 12, 11, 8, 39, 709, DateTimeKind.Local).AddTicks(5283),
                             ordreNummer = "1"
                         },
                         new
@@ -111,7 +111,7 @@ namespace BaggrundsDataLibrary.Migrations
                             Id = 3,
                             kundeNummer = "1",
                             leverandorNummer = "1",
-                            ordreDato = new DateTime(2024, 11, 12, 10, 31, 17, 68, DateTimeKind.Local).AddTicks(2091),
+                            ordreDato = new DateTime(2024, 11, 12, 11, 8, 39, 709, DateTimeKind.Local).AddTicks(5285),
                             ordreNummer = "2"
                         },
                         new
@@ -119,7 +119,7 @@ namespace BaggrundsDataLibrary.Migrations
                             Id = 4,
                             kundeNummer = "1",
                             leverandorNummer = "1",
-                            ordreDato = new DateTime(2024, 11, 12, 10, 31, 17, 68, DateTimeKind.Local).AddTicks(2093),
+                            ordreDato = new DateTime(2024, 11, 12, 11, 8, 39, 709, DateTimeKind.Local).AddTicks(5287),
                             ordreNummer = "2"
                         });
                 });
@@ -267,6 +267,7 @@ namespace BaggrundsDataLibrary.Migrations
                         new
                         {
                             Id = 3,
+                            bestiltAntal = 0.0,
                             enheder = "stk",
                             kostPris = 2500.0,
                             maxLager = 1.0,
@@ -278,6 +279,7 @@ namespace BaggrundsDataLibrary.Migrations
                         new
                         {
                             Id = 4,
+                            bestiltAntal = 0.0,
                             enheder = "mtr",
                             kostPris = 150.0,
                             maxLager = 5.0,

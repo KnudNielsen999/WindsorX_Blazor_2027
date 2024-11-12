@@ -25,8 +25,8 @@ namespace WindsorX_2027.DB_Entity
                new IndkobModel { Id = 4, ordreNummer = "2", kundeNummer = "1", leverandorNummer = "1" }
                );
             modelBuilder.Entity<Lagermodel>().HasData(
-                new Lagermodel { Id=3,vareNummer="2", vareTekst="Motor",vareMaengde=1,enheder="stk", kostPris=2500.00, maxLager=1, minLager=0},
-                new Lagermodel { Id = 4, vareNummer = "4", vareTekst = "gevind", vareMaengde = 5, enheder = "mtr", kostPris = 150.00, maxLager = 5, minLager = 1 }
+                new Lagermodel { Id=3,vareNummer="2", vareTekst="Motor",vareMaengde=1,enheder="stk", kostPris=2500.00, maxLager=1, minLager=0, bestiltAntal = 0 },
+                new Lagermodel { Id = 4, vareNummer = "4", vareTekst = "gevind", vareMaengde = 5, enheder = "mtr", kostPris = 150.00, maxLager = 5, minLager = 1, bestiltAntal=0 }
                 );
 
 

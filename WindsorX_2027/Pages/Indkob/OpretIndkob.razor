@@ -171,12 +171,15 @@
         {
             // Hent varen baseret på vareNummer i ordreLinje
             var vareopdatering = await LagerRepository.GetVareByVarenummerAsync(ordreLinje.vareNummer);
+            
 
-            // Hvis varen findes i lageret, opdater bestillingsdatoen
+            // Hvis varen findes i lageret, opdater bestillingsdatoen og bestilt antal
             if (vareopdatering != null)
             {
                 vareopdatering.sidsteBestillingsDato = indkob.ordreDato;
-                vareopdatering.bestiltAntal =vareopdatering.bestiltAntal + ordreLinje.ordreAntal;
+                //vareopdatering.bestiltAntal = ordreLinje.ordreAntal; 
+                vareopdatering.bestiltAntal = (vareopdatering.bestiltAntal ?? 0) + (ordreLinje.ordreAntal ?? 0); // Brug nul hvis nogen af dem er null
+
                 await LagerRepository.UpdateItemAsync(vareopdatering);
             }
             else
@@ -185,6 +188,7 @@
                 Console.WriteLine(errorMessage);
             }
         }
+
     }
 
 }
