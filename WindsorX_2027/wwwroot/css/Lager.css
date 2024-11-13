@@ -11,20 +11,26 @@
 }
 
 #listeoverskrift {
-    background-color: black;
+    background-color: red;
     position: sticky;
     top: 70px;
-    text-align: center;
+    text-align:right;
    
 }
 
+.center-text {
+    text-align: center;
+}
+
+
 td {
     color: black;
+    text-align: center;
 }
 
 th {
     color: white;
-   
+    text-align: center;
 }
 
 .top-row {

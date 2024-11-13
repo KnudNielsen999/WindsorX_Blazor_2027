@@ -33,6 +33,9 @@
 	  <Content Update="wwwroot\Billeder\WindsorBillede.png">
 	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	  </Content>
+	  <Content Update="wwwroot\Billeder\WindsorForside.png">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </Content>
 	  <Content Update="wwwroot\Billeder\windX.png">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </Content>

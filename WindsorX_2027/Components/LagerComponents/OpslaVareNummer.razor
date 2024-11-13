@@ -5,7 +5,8 @@
 @inject ILagerRepository lagerRepository
 @inject NavigationManager Navigation
 
-<link href="\css\Lager.css" rel="stylesheet" />
+<link href="css/Lager.css" rel="stylesheet" />
+
 
 <div class="top-menu">
     <TopMenuBootstrap />
@@ -18,7 +19,7 @@
     <div class="row ">
         <div class="col-auto">
             <div class="input-group">
-                <input type="text" class="form-control" @bind="varenummer" placeholder="Indtast varenummer" style="background-color:lightblue">
+                <input type="text" class="form-control" @bind="varenummer" placeholder="Indtast varenummer" style="background-color:lightblue; width:300px">
                 <button class="btn btn-primary" @onclick="SøgEfterVarenummer">
                     <i class="btn btn-success oi oi-compass"></i>
                     Søg
@@ -34,7 +35,7 @@ else if (string.IsNullOrEmpty(Varenummer))
     <div class="row">
         <div class="col-auto">
             <div class="input-group">
-                <input type="text" class="form-control" @bind="varenummer" placeholder="Indtast varenummer" style="background-color:lightblue;font-size:20px;text-align:center;width:125px;">
+                <input type="text" class="form-control" @bind="varenummer" placeholder="Indtast varenummer" style="background-color:lightblue;font-size:18px;text-align:center;width:250px;">
                 <button class="btn btn-primary" @onclick="SøgEfterVarenummer">
                     <i class="btn btn-success oi oi-compass"></i>
                     Søg
@@ -60,7 +61,7 @@ else if (string.IsNullOrEmpty(Varenummer))
 
     @foreach (var item in fundenvarenummer)
     {
-        <tbody>
+        <tbody style="text-align: center;">
             <tr id="dataliste">
                 <td>@item.vareNummer</td>
                 <td>@item.vareTekst</td>
@@ -84,13 +85,14 @@ else if (string.IsNullOrEmpty(Varenummer))
             <th>Sidste Lager Bev dato </th>
             <th>Lager optalt dato. </th>
             <th>Sidste Bestillings dato </th>
+            <th>Bestillings antal </th>
         </tr>
     </thead>
 
 
     @foreach (var item in fundenvarenummer)
     {
-        <tbody>
+        <tbody style="text-align: center;">
             <tr id="dataliste">
                 <td id="talformat">@string.Format("{0:F2}", item.salgsPris)</td>
                 <td>@item.location1</td>
@@ -99,6 +101,7 @@ else if (string.IsNullOrEmpty(Varenummer))
                 <td>@item.sidsteLagerBevDato</td>
                 <td>@item.lagerOptaltDato</td>
                 <td>@item.sidsteBestillingsDato</td>
+                <td>@item.bestiltAntal</td>
             </tr>
         </tbody>
     }
