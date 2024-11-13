@@ -6,6 +6,10 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Include="wwwroot\css\Index.css" />
+  </ItemGroup>
+
 	<ItemGroup>
 	<PackageReference Include="AutoMapper" Version="13.0.1" />
 	<PackageReference Include="FluentAssertions" Version="6.12.1" />
@@ -23,6 +27,15 @@
 
 	<ItemGroup>
 	  <ProjectReference Include="..\BaggrundsDataLibrary\BaggrundsDataLibrary.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Content Update="wwwroot\Billeder\WindsorBillede.png">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </Content>
+	  <Content Update="wwwroot\Billeder\windX.png">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
 	</ItemGroup>
 
 </Project>

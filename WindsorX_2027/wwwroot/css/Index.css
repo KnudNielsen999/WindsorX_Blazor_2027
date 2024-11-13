@@ -1,0 +1,11 @@
+﻿body {
+  
+
+}
+ .baggrund{
+    background-image: url('/Billeder/windX.png'); /* Indsæt stien til dit billede her */
+    background-size: cover; /* Gør at billedet fylder hele baggrunden */
+    background-position: center; /* Centrer billedet */
+    background-repeat: no-repeat; /* Forhindrer gentagelse af billedet */
+    height: 100vh; /* Sæt højden, så baggrunden fylder hele siden */
+}
