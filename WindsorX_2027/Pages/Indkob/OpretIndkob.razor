@@ -122,6 +122,7 @@
 
     private void AddOrdreLinje()
     {
+       
         indkob?.ordreLinjer.Add(new OrdreModel());
     }
 
@@ -130,11 +131,27 @@
         indkob?.ordreLinjer.Remove(ordreLinje);
     }
 
+
+    private async Task EnsureStamdataForOrdrelinjer()
+    {
+        foreach (var ordreLinje in indkob.ordreLinjer)
+        {
+            var vare = await LagerRepository.GetVareByVarenummerAsync(ordreLinje.vareNummer);
+            if (vare != null)
+            {
+                ordreLinje.vareTekst = vare.vareTekst;
+                ordreLinje.enheder = vare.enheder;
+                ordreLinje.kostPris = vare.kostPris;
+                ordreLinje.leverandørNummer = indkob.leverandorNummer;
+            }
+        }
+    }
+
     private async Task SaveIndkob()
     {
         try
         {
-
+            await EnsureStamdataForOrdrelinjer(); // Sørg for at alle ordrelinjer har opdateret stamdata
             await IndkobsRepository.CreateIndkobAsync(indkob);
             await OpdaterLagerData(indkob);
 
@@ -158,6 +175,8 @@
             ordreLinje.enheder = vare.enheder;
             ordreLinje.kostPris = vare.kostPris;
             ordreLinje.leverandørNummer = indkob.leverandorNummer;
+            
+
         }
         else
         {
