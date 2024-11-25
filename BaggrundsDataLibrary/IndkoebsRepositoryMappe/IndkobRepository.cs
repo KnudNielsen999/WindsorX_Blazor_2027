@@ -83,6 +83,17 @@
             }
         }
 
+
+        // Hent en indkøbsordre baseret på ordreNummer
+        public async Task<IndkobModel?> GetIndkobByOrdreNummerAsync(string ordreNummer)
+        {
+            return await _context.IndkobsOrdre
+                .Include(i => i.ordreLinjer) // Inkluder relaterede ordrelinjer
+                .FirstOrDefaultAsync(i => i.ordreNummer == ordreNummer);
+        }
+
+
+
         // Tjekker om en ordreNummerId allerede eksisterer
         public async Task<bool> DoesOrdreNummerExistAsync(string ordreNummer)
         {

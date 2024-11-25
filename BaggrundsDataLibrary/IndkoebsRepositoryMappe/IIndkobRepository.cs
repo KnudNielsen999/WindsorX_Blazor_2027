@@ -11,5 +11,6 @@ namespace WindsorX_2027.IndkoebsRepositoryMappe
         Task<IndkobModel> GetIndkobByIdAsync(int id);
         Task<List<IndkobModel>> SearchByOrdreNummerAsync(string ordreNummer);
         Task UpdateIndkobAsync(IndkobModel indkob);
+        Task<IndkobModel?> GetIndkobByOrdreNummerAsync(string ordreNummer);
     }
 }

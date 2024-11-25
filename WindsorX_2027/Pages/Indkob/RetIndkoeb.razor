@@ -1,0 +1,121 @@
+﻿@page "/Retindkoeb"
+@inject IIndkobRepository IndkobsRepository
+@using WindsorX_2027.IndkoebsModel
+@using WindsorX_2027.IndkoebsRepositoryMappe
+
+@if (indkob == null)
+{
+    <div>
+        <h4>Indtast Ordrenummer</h4>
+        <InputText @bind-Value="ordreNummer" placeholder="Indtast ordrenummer" class="form-control" />
+        <button class="btn btn-primary mt-2" @onclick="HentOrdre">Hent Ordre</button>
+        @if (!string.IsNullOrEmpty(errorMessage))
+        {
+            <p class="text-danger">@errorMessage</p>
+        }
+    </div>
+}
+else
+{
+    <EditForm Model="indkob" OnValidSubmit="SaveIndkob">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+        <h4>Rediger Indkøbsordre</h4>
+
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Ordre Nummer:</label>
+            <div class="col-sm-10">
+                <InputText class="form-control" @bind-Value="indkob.ordreNummer" disabled />
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Kunde Nummer:</label>
+            <div class="col-sm-10">
+                <InputText class="form-control" @bind-Value="indkob.kundeNummer" />
+            </div>
+        </div>
+
+        <h4>Ordrelinjer</h4>
+        @if (indkob.ordreLinjer != null && indkob.ordreLinjer.Count > 0)
+        {
+            @foreach (var ordreLinje in indkob.ordreLinjer)
+            {
+                <div class="border rounded p-3 mb-3">
+                    <div class="form-group row">
+                        <div class="col-sm-2">
+                            <label>Vare Nummer:</label>
+                            <InputText class="form-control" @bind-Value="ordreLinje.vareNummer" />
+                        </div>
+                        <div class="col-sm-2">
+                            <label>Vare Tekst:</label>
+                            <InputText class="form-control" @bind-Value="ordreLinje.vareTekst" disabled />
+                        </div>
+                        <div class="col-sm-1">
+                            <label>Antal:</label>
+                            <InputNumber TValue="double?" class="form-control" @bind-Value="ordreLinje.ordreAntal" />
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <p class="text-warning">Ingen ordrelinjer tilgængelige.</p>
+        }
+
+        <div class="form-group row">
+            <button type="submit" class="btn btn-success">Gem Ændringer</button>
+        </div>
+    </EditForm>
+}
+
+@code {
+    private string ordreNummer = string.Empty;
+    private IndkobModel? indkob; // Den hentede indkøbsordre
+    private string? errorMessage; // Fejlmeddelelser
+
+    // Hent ordre baseret på indtastet ordrenummer
+    private async Task HentOrdre()
+    {
+        try
+        {
+            if (string.IsNullOrWhiteSpace(ordreNummer))
+            {
+                errorMessage = "Ordrenummer skal indtastes.";
+                return;
+            }
+
+            indkob = await IndkobsRepository.GetIndkobByOrdreNummerAsync(ordreNummer);
+            if (indkob == null)
+            {
+                errorMessage = $"Ingen ordre fundet med ordrenummer: {ordreNummer}";
+            }
+            else
+            {
+                errorMessage = null; // Nulstil fejlmeddelelser, hvis alt gik godt
+            }
+        }
+        catch (Exception ex)
+        {
+            errorMessage = $"Fejl ved hentning af ordre: {ex.Message}";
+        }
+    }
+
+    // Gem ændringer til ordren
+    private async Task SaveIndkob()
+    {
+        try
+        {
+            if (indkob != null)
+            {
+                await IndkobsRepository.UpdateIndkobAsync(indkob);
+                errorMessage = null;
+                Console.WriteLine("Ændringer gemt!");
+            }
+        }
+        catch (Exception ex)
+        {
+            errorMessage = $"Fejl ved gemning: {ex.Message}";
+        }
+    }
+}
