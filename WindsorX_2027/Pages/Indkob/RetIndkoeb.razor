@@ -1,7 +1,13 @@
 ﻿@page "/Retindkoeb"
 @inject IIndkobRepository IndkobsRepository
+@inject ILagerRepository LagerRepository
 @using WindsorX_2027.IndkoebsModel
 @using WindsorX_2027.IndkoebsRepositoryMappe
+@using WindsorX_2027.LagerRepositoryMappe
+
+
+<TopMenuBootstrap />
+<h2>Ret Indkøb</h2>
 
 @if (indkob == null)
 {
@@ -21,7 +27,6 @@ else
         <DataAnnotationsValidator />
         <ValidationSummary />
         <h4>Rediger Indkøbsordre</h4>
-
         <div class="form-group row">
             <label class="col-sm-2 col-form-label">Ordre Nummer:</label>
             <div class="col-sm-10">
@@ -35,12 +40,41 @@ else
             </div>
         </div>
 
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Ordre Dato:</label>
+            <div class="col-sm-10">
+                <InputDate class="form-control" @bind-Value="indkob.ordreDato" />
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Ordre Detaljer:</label>
+            <div class="col-sm-10">
+                <InputTextArea class="form-control" @bind-Value="indkob.ordreDetaljer" />
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Reference Detaljer:</label>
+            <div class="col-sm-10">
+                <InputTextArea class="form-control" @bind-Value="indkob.referenceDetaljer" />
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Leverandør Nummer:</label>
+            <div class="col-sm-10">
+                <InputText class="form-control" @bind-Value="indkob.leverandorNummer" />
+            </div>
+        </div>
+
         <h4>Ordrelinjer</h4>
         @if (indkob.ordreLinjer != null && indkob.ordreLinjer.Count > 0)
         {
             @foreach (var ordreLinje in indkob.ordreLinjer)
             {
                 <div class="border rounded p-3 mb-3">
+                    <input type="hidden" @bind="ordreLinje.IndkobModelId" />
                     <div class="form-group row">
                         <div class="col-sm-2">
                             <label>Vare Nummer:</label>
@@ -54,6 +88,20 @@ else
                             <label>Antal:</label>
                             <InputNumber TValue="double?" class="form-control" @bind-Value="ordreLinje.ordreAntal" />
                         </div>
+                        <div class="col-sm-1">
+                            <label>Enheder:</label>
+                            <InputText class="form-control" @bind-Value="ordreLinje.enheder" Disabled="true" />
+                        </div>
+                        <div class="col-sm-2">
+                            <label>Kost Pris:</label>
+                            <InputNumber class="form-control" @bind-Value="ordreLinje.kostPris" Disabled="true" />
+                        </div>
+                        <div class="col d-flex justify-content-center align-items-center">
+                            <button type="button" class="btn btn-primary w-100 h-75" @onclick="() => OnVarenummerChanged(ordreLinje)">Tjek Varenummer</button>
+                        </div>
+                        <div class="col d-flex justify-content-center align-items-center px-0">
+                            <button type="button" class="btn btn-danger w-100 h-75" @onclick="() => RemoveOrdreLinje(ordreLinje)">Fjern</button>
+                        </div>
                     </div>
                 </div>
             }
@@ -62,19 +110,33 @@ else
         {
             <p class="text-warning">Ingen ordrelinjer tilgængelige.</p>
         }
-
+        <div class="col-2 align-items-start">
+            <button type="button" class="btn btn-secondary py-2 my-2 w-100  " @onclick="AddOrdreLinje">Tilføj Ordrelinje</button>
+        </div>
         <div class="form-group row">
             <button type="submit" class="btn btn-success">Gem Ændringer</button>
         </div>
     </EditForm>
+    <h4>@vistekst</h4>
 }
 
 @code {
     private string ordreNummer = string.Empty;
-    private IndkobModel? indkob; // Den hentede indkøbsordre
-    private string? errorMessage; // Fejlmeddelelser
+    private IndkobModel? indkob;
+    private string? errorMessage;
+    private string? vistekst;
 
-    // Hent ordre baseret på indtastet ordrenummer
+
+
+
+    private void AddOrdreLinje()
+    {
+
+        indkob?.ordreLinjer.Add(new OrdreModel());
+    }
+
+
+
     private async Task HentOrdre()
     {
         try
@@ -86,13 +148,14 @@ else
             }
 
             indkob = await IndkobsRepository.GetIndkobByOrdreNummerAsync(ordreNummer);
+
             if (indkob == null)
             {
                 errorMessage = $"Ingen ordre fundet med ordrenummer: {ordreNummer}";
             }
             else
             {
-                errorMessage = null; // Nulstil fejlmeddelelser, hvis alt gik godt
+                errorMessage = null; // Nulstil fejlmeddelelser
             }
         }
         catch (Exception ex)
@@ -101,21 +164,67 @@ else
         }
     }
 
-    // Gem ændringer til ordren
+    private async Task EnsureStamdataForOrdrelinjer()
+    {
+        foreach (var ordreLinje in indkob.ordreLinjer)
+        {
+            var vare = await LagerRepository.GetVareByVarenummerAsync(ordreLinje.vareNummer);
+            if (vare != null)
+            {
+                ordreLinje.vareTekst = vare.vareTekst;
+                ordreLinje.enheder = vare.enheder;
+                ordreLinje.kostPris = vare.kostPris;
+                ordreLinje.leverandørNummer = indkob.leverandorNummer;
+                ordreLinje.IndkobModelId = indkob.Id;
+            }
+        }
+    }
+
     private async Task SaveIndkob()
     {
         try
         {
             if (indkob != null)
             {
+                
+                await EnsureStamdataForOrdrelinjer();
                 await IndkobsRepository.UpdateIndkobAsync(indkob);
                 errorMessage = null;
-                Console.WriteLine("Ændringer gemt!");
+                vistekst = "ændringer gemt!";
             }
         }
         catch (Exception ex)
         {
             errorMessage = $"Fejl ved gemning: {ex.Message}";
+        }
+    }
+
+
+    private async Task OnVarenummerChanged(OrdreModel ordreLinje)
+    {
+        var vare = await LagerRepository.GetVareByVarenummerAsync(ordreLinje.vareNummer);
+        if (vare != null)
+        {
+            ordreLinje.vareTekst = vare.vareTekst;
+            ordreLinje.enheder = vare.enheder;
+            ordreLinje.kostPris = vare.kostPris;
+            ordreLinje.leverandørNummer = indkob.leverandorNummer;
+
+
+        }
+        else
+        {
+            errorMessage = "Varenummer ikke fundet i lageret.";
+        }
+        StateHasChanged();
+    }
+
+    private void RemoveOrdreLinje(OrdreModel ordreLinje)
+    {
+        if (ordreLinje != null)
+        {
+            indkob?.ordreLinjer.Remove(ordreLinje);
+            StateHasChanged(); // Opdater UI
         }
     }
 }

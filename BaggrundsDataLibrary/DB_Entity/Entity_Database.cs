@@ -30,11 +30,12 @@ namespace WindsorX_2027.DB_Entity
                 );
 
 
-            modelBuilder.Entity<IndkobModel>()
-           .HasMany(i => i.ordreLinjer)
-           .WithOne(o => o.IndkobModel)
-           .HasForeignKey(o => o.IndkobModelId)
-           .OnDelete(DeleteBehavior.Cascade);
+     modelBuilder.Entity<IndkobModel>()
+     .HasMany(i => i.ordreLinjer)
+     .WithOne(o => o.IndkobModel)
+     .HasForeignKey(o => o.IndkobModelId)
+     .OnDelete(DeleteBehavior.Cascade);
+
 
 
         }

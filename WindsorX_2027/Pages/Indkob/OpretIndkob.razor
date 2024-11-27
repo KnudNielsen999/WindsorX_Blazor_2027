@@ -122,7 +122,7 @@
 
     private void AddOrdreLinje()
     {
-       
+
         indkob?.ordreLinjer.Add(new OrdreModel());
     }
 
@@ -143,6 +143,7 @@
                 ordreLinje.enheder = vare.enheder;
                 ordreLinje.kostPris = vare.kostPris;
                 ordreLinje.leverandørNummer = indkob.leverandorNummer;
+                ordreLinje.IndkobModelId = indkob.Id;
             }
         }
     }

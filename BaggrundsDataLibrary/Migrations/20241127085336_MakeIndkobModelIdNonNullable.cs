@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace BaggrundsDataLibrary.Migrations
 {
     /// <inheritdoc />
-    public partial class demo : Migration
+    public partial class MakeIndkobModelIdNonNullable : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -112,7 +112,7 @@ namespace BaggrundsDataLibrary.Migrations
                     ordreAntal = table.Column<double>(type: "float", nullable: true),
                     enheder = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     kostPris = table.Column<double>(type: "float", nullable: true),
-                    IndkobModelId = table.Column<int>(type: "int", nullable: true)
+                    IndkobModelId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -130,10 +130,10 @@ namespace BaggrundsDataLibrary.Migrations
                 columns: new[] { "Id", "kundeNummer", "leverandorNummer", "ordreDato", "ordreDetaljer", "ordreNummer", "referenceDetaljer" },
                 values: new object[,]
                 {
-                    { 1, "1", "1", new DateTime(2024, 11, 12, 11, 8, 39, 709, DateTimeKind.Local).AddTicks(5241), null, "1", null },
-                    { 2, "1", "1", new DateTime(2024, 11, 12, 11, 8, 39, 709, DateTimeKind.Local).AddTicks(5283), null, "1", null },
-                    { 3, "1", "1", new DateTime(2024, 11, 12, 11, 8, 39, 709, DateTimeKind.Local).AddTicks(5285), null, "2", null },
-                    { 4, "1", "1", new DateTime(2024, 11, 12, 11, 8, 39, 709, DateTimeKind.Local).AddTicks(5287), null, "2", null }
+                    { 1, "1", "1", new DateTime(2024, 11, 27, 9, 53, 36, 67, DateTimeKind.Local).AddTicks(7226), null, "1", null },
+                    { 2, "1", "1", new DateTime(2024, 11, 27, 9, 53, 36, 67, DateTimeKind.Local).AddTicks(7272), null, "1", null },
+                    { 3, "1", "1", new DateTime(2024, 11, 27, 9, 53, 36, 67, DateTimeKind.Local).AddTicks(7275), null, "2", null },
+                    { 4, "1", "1", new DateTime(2024, 11, 27, 9, 53, 36, 67, DateTimeKind.Local).AddTicks(7277), null, "2", null }
                 });
 
             migrationBuilder.InsertData(

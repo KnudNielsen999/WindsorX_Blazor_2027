@@ -15,8 +15,8 @@ namespace WindsorX_2027.IndkoebsModel
         public string? referenceDetaljer { get; set; }
         public string? leverandorNummer { get; set; }
 
-        // Liste af ordrelinjer som er knyttet til dette indkøb
-        public List<OrdreModel?> ordreLinjer { get; set; } = new List<OrdreModel?>();
+        // Liste af ordrelinjer knyttet til dette indkøb
+        public List<OrdreModel> ordreLinjer { get; set; } = new List<OrdreModel>();
     }
 
     public class OrdreModel
@@ -30,14 +30,12 @@ namespace WindsorX_2027.IndkoebsModel
         public double? kostPris { get; set; }
 
         // Foreign key til IndkobModel
-        public int? IndkobModelId { get; set; }
+        public int IndkobModelId { get; set; } // Ikke-nullable
 
         // Navigation property til at referere til IndkobModel
         [ForeignKey("IndkobModelId")]
-        public IndkobModel? IndkobModel { get; set; }
+        public IndkobModel IndkobModel { get; set; } = null!; // Ikke-nullable
     }
-
-
 
 
     public class LeverandorReg

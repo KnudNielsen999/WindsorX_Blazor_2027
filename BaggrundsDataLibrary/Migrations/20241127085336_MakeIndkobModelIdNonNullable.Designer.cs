@@ -12,8 +12,8 @@ using WindsorX_2027.DB_Entity;
 namespace BaggrundsDataLibrary.Migrations
 {
     [DbContext(typeof(Entity_Database))]
-    [Migration("20241112100840_demo")]
-    partial class demo
+    [Migration("20241127085336_MakeIndkobModelIdNonNullable")]
+    partial class MakeIndkobModelIdNonNullable
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -95,7 +95,7 @@ namespace BaggrundsDataLibrary.Migrations
                             Id = 1,
                             kundeNummer = "1",
                             leverandorNummer = "1",
-                            ordreDato = new DateTime(2024, 11, 12, 11, 8, 39, 709, DateTimeKind.Local).AddTicks(5241),
+                            ordreDato = new DateTime(2024, 11, 27, 9, 53, 36, 67, DateTimeKind.Local).AddTicks(7226),
                             ordreNummer = "1"
                         },
                         new
@@ -103,7 +103,7 @@ namespace BaggrundsDataLibrary.Migrations
                             Id = 2,
                             kundeNummer = "1",
                             leverandorNummer = "1",
-                            ordreDato = new DateTime(2024, 11, 12, 11, 8, 39, 709, DateTimeKind.Local).AddTicks(5283),
+                            ordreDato = new DateTime(2024, 11, 27, 9, 53, 36, 67, DateTimeKind.Local).AddTicks(7272),
                             ordreNummer = "1"
                         },
                         new
@@ -111,7 +111,7 @@ namespace BaggrundsDataLibrary.Migrations
                             Id = 3,
                             kundeNummer = "1",
                             leverandorNummer = "1",
-                            ordreDato = new DateTime(2024, 11, 12, 11, 8, 39, 709, DateTimeKind.Local).AddTicks(5285),
+                            ordreDato = new DateTime(2024, 11, 27, 9, 53, 36, 67, DateTimeKind.Local).AddTicks(7275),
                             ordreNummer = "2"
                         },
                         new
@@ -119,7 +119,7 @@ namespace BaggrundsDataLibrary.Migrations
                             Id = 4,
                             kundeNummer = "1",
                             leverandorNummer = "1",
-                            ordreDato = new DateTime(2024, 11, 12, 11, 8, 39, 709, DateTimeKind.Local).AddTicks(5287),
+                            ordreDato = new DateTime(2024, 11, 27, 9, 53, 36, 67, DateTimeKind.Local).AddTicks(7277),
                             ordreNummer = "2"
                         });
                 });
@@ -178,7 +178,7 @@ namespace BaggrundsDataLibrary.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("IndkobModelId")
+                    b.Property<int>("IndkobModelId")
                         .HasColumnType("int");
 
                     b.Property<string>("enheder")
@@ -295,7 +295,8 @@ namespace BaggrundsDataLibrary.Migrations
                     b.HasOne("WindsorX_2027.IndkoebsModel.IndkobModel", "IndkobModel")
                         .WithMany("ordreLinjer")
                         .HasForeignKey("IndkobModelId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("IndkobModel");
                 });

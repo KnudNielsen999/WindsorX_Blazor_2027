@@ -44,26 +44,46 @@
         // Opdater en indkøbsordre
         public async Task UpdateIndkobAsync(IndkobModel indkob)
         {
+            // Hent eksisterende IndkobModel fra databasen, inklusive ordreLinjer
             var existingIndkob = await _context.IndkobsOrdre
-                .Include(i => i.ordreLinjer) // Inkluderer ordrelinjer for korrekt opdatering
+                .Include(i => i.ordreLinjer) // Inkluder ordrelinjer for korrekt opdatering
                 .FirstOrDefaultAsync(i => i.Id == indkob.Id);
 
-            if (existingIndkob != null)
-            {
-                // Map alle nødvendige properties fra 'indkob' til 'existingIndkob'
-                _context.Entry(existingIndkob).CurrentValues.SetValues(indkob);
+            if (existingIndkob == null)
+                throw new KeyNotFoundException($"Indkøbsordre med ID {indkob.Id} blev ikke fundet.");
 
-                // Opdater ordrelinjer
-                existingIndkob.ordreLinjer.Clear();
-                existingIndkob.ordreLinjer.AddRange(indkob.ordreLinjer);
+            // Opdater hovedmodellen
+            _context.Entry(existingIndkob).CurrentValues.SetValues(indkob);
 
-                await _context.SaveChangesAsync();
-            }
-            else
+            // Håndter ordrelinjer
+            // 1. Fjern ordrelinjer, som ikke længere findes i den nye model
+            existingIndkob.ordreLinjer.RemoveAll(ordreLinje =>
+                !indkob.ordreLinjer.Any(o => o.Id == ordreLinje.Id));
+
+            // 2. Tilføj eller opdater eksisterende ordrelinjer
+            foreach (var ordreLinje in indkob.ordreLinjer)
             {
-                throw new KeyNotFoundException("Kunne ikke finde indkøbsordren med ID: " + indkob.Id);
+                var existingLinje = existingIndkob.ordreLinjer
+                    .FirstOrDefault(o => o.Id == ordreLinje.Id);
+
+                if (existingLinje != null)
+                {
+                    // Opdater eksisterende ordrelinje
+                    _context.Entry(existingLinje).CurrentValues.SetValues(ordreLinje);
+                }
+                else
+                {
+                    // Tilføj ny ordrelinje
+                    existingIndkob.ordreLinjer.Add(ordreLinje);
+                }
             }
+
+            // Gem ændringer
+            await _context.SaveChangesAsync();
         }
+
+
+
 
         // Slet en indkøbsordre
         public async Task DeleteIndkobAsync(int id)
