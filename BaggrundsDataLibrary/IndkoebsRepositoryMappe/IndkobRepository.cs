@@ -19,10 +19,21 @@
         // Opret en ny indkøbsordre
         public async Task CreateIndkobAsync(IndkobModel indkob)
         {
+            // Tilføj den nye indkøbsordre til konteksten
             _context.Attach(indkob);
             _context.Add(indkob);
+
+            // Gem for at få tildelt ID'et fra databasen
             await _context.SaveChangesAsync();
+
+            // Generér ordrenummer baseret på det tildelte ID
+            indkob.ordreNummer = $"Ind_{indkob.Id}";
+
+            // Opdater ordren med det nye ordrenummer
+            _context.Update(indkob); // Marker entiteten som ændret
+            await _context.SaveChangesAsync(); // Gem ændringen
         }
+
 
         // Hent alle indkøbsordrer
         public async Task<List<IndkobModel>> GetAllIndkobAsync()

@@ -1,6 +1,7 @@
 ﻿@page "/Retindkoeb"
 @inject IIndkobRepository IndkobsRepository
 @inject ILagerRepository LagerRepository
+@inject NavigationManager Navigation
 @using WindsorX_2027.IndkoebsModel
 @using WindsorX_2027.IndkoebsRepositoryMappe
 @using WindsorX_2027.LagerRepositoryMappe
@@ -121,7 +122,7 @@ else
 }
 
 @code {
-    private string ordreNummer = string.Empty;
+    private string ordreNummer = "Ind_";
     private IndkobModel? indkob;
     private string? errorMessage;
     private string? vistekst;
@@ -186,11 +187,13 @@ else
         {
             if (indkob != null)
             {
-                
+
                 await EnsureStamdataForOrdrelinjer();
                 await IndkobsRepository.UpdateIndkobAsync(indkob);
+                await OpdaterLagerData(indkob);
                 errorMessage = null;
                 vistekst = "ændringer gemt!";
+                Navigation.NavigateTo(Navigation.Uri, forceLoad: true);
             }
         }
         catch (Exception ex)
@@ -219,12 +222,70 @@ else
         StateHasChanged();
     }
 
-    private void RemoveOrdreLinje(OrdreModel ordreLinje)
+    private async Task RemoveOrdreLinje(OrdreModel ordreLinje)
     {
         if (ordreLinje != null)
         {
+            // Hent varen baseret på vareNummer i ordreLinje
+            var vareopdatering = await LagerRepository.GetVareByVarenummerAsync(ordreLinje.vareNummer);
+            if (vareopdatering != null)
+            {
+                // Reducer bestilt antal
+                vareopdatering.bestiltAntal = Math.Max((vareopdatering.bestiltAntal ?? 0) - (ordreLinje.ordreAntal ?? 0), 0);
+
+                // Opdater sidste bestillingsdato (hvis relevant)
+                vareopdatering.sidsteBestillingsDato = DateTime.Now;
+
+                // Gem ændringer i lageret
+                await LagerRepository.UpdateItemAsync(vareopdatering);
+            }
+            else
+            {
+                errorMessage = $"Varenummer {ordreLinje.vareNummer} blev ikke fundet i lageret.";
+                Console.WriteLine(errorMessage);
+            }
+
+            // Fjern linjen fra ordrelisten
             indkob?.ordreLinjer.Remove(ordreLinje);
-            StateHasChanged(); // Opdater UI
+
+            // Opdater UI
+            StateHasChanged();
         }
+    }
+
+
+    private async Task OpdaterLagerData(IndkobModel indkob)
+    {
+        foreach (var ordreLinje in indkob.ordreLinjer)
+        {
+            // Hent varen baseret på vareNummer i ordreLinje
+            var vareopdatering = await LagerRepository.GetVareByVarenummerAsync(ordreLinje.vareNummer);
+            var dif = ordreLinje.ordreAntal- vareopdatering.bestiltAntal;
+
+            // Hvis varen findes i lageret, opdater bestillingsdatoen og bestilt antal
+            if (vareopdatering != null)
+            {
+
+                if (vareopdatering.bestiltAntal == null || vareopdatering.bestiltAntal == 0)
+                {
+                    vareopdatering.bestiltAntal = Math.Max(ordreLinje.ordreAntal ?? 0, 0); // Undgå negative værdier
+                }
+                else
+                {
+                    vareopdatering.bestiltAntal = Math.Max(vareopdatering.bestiltAntal.Value + (dif ?? 0), 0); // Undgå negative værdier
+                }
+
+                
+                vareopdatering.sidsteBestillingsDato = indkob.ordreDato;
+
+                await LagerRepository.UpdateItemAsync(vareopdatering);
+            }
+            else
+            {
+                errorMessage = $"Varenummer {ordreLinje.vareNummer} blev ikke fundet i lageret.";
+                Console.WriteLine(errorMessage);
+            }
+        }
+
     }
 }
