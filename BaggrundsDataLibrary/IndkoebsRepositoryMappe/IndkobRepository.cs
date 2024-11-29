@@ -6,14 +6,18 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+    using WindsorX_2027.LagerRepositoryMappe;
+    using BaggrundsDataLibrary.LagerTransAktioner;
 
     public class IndkobRepository : IIndkobRepository
     {
         private readonly Entity_Database _context;
+        private readonly ILagerRepository _lagerRepository;
 
-        public IndkobRepository(Entity_Database context)
+        public IndkobRepository(Entity_Database context, ILagerRepository lagerRepository)
         {
             _context = context;
+            _lagerRepository = lagerRepository;
         }
 
         // Opret en ny indkøbsordre
@@ -159,19 +163,39 @@
 
         public async Task DeleteOrderAsync(string ordreNummer)
         {
+            // Find ordren inklusiv ordrelinjer
             var ordre = await _context.IndkobsOrdre
-                .FirstOrDefaultAsync(o => o.ordreNummer == ordreNummer); // Ret metode til at finde ordre korrekt
+                .Include(o => o.ordreLinjer)
+                .FirstOrDefaultAsync(o => o.ordreNummer == ordreNummer);
 
             if (ordre != null)
             {
+                // Juster lagerdata for hver vare i ordrelinjerne
+                foreach (var ordreLinje in ordre.ordreLinjer)
+                {
+                    // Brug LagerRepository til at finde varen
+                    var vare = await _lagerRepository.GetVareByVarenummerAsync(ordreLinje.vareNummer);
+                    if (vare != null)
+                    {
+                        // Opdater bestiltAntal for varen
+                        vare.bestiltAntal = Math.Max((vare.bestiltAntal ?? 0) - (ordreLinje.ordreAntal ?? 0), 0);
+
+                        // Opdater varen i lageret
+                        await _lagerRepository.UpdateItemAsync(vare);
+                    }
+                }
+
+                // Fjern selve ordren
                 _context.IndkobsOrdre.Remove(ordre);
-                await _context.SaveChangesAsync();
+                await _context.SaveChangesAsync(); // Gem ændringerne
             }
             else
             {
                 throw new KeyNotFoundException($"Ordren med ordreNummer {ordreNummer} blev ikke fundet.");
             }
         }
+
+
 
 
     }
