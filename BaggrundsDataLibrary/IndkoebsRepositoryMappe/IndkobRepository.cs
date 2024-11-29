@@ -138,6 +138,42 @@
                 .Where(i => i.ordreNummer == ordreNummer)
                 .ToListAsync();
         }
+
+        public async Task<List<IndkobModel>> GetOpenIndkobsAsync()
+        {
+            return await _context.IndkobsOrdre
+                .Where(o => o.open == true) // Eller en tilsvarende logik for at markere åbne ordrer
+                .OrderBy(o => o.ordreDato) // Sortér efter dato, hvis det er relevant
+                .ToListAsync();
+        }
+
+        public async Task CloseOrderAsync(string ordreNummer)
+        {
+            var ordre = await _context.IndkobsOrdre.FirstOrDefaultAsync(o => o.ordreNummer == ordreNummer);
+            if (ordre != null)
+            {
+                ordre.open = false; // Eller en tilsvarende logik
+                await _context.SaveChangesAsync();
+            }
+        }
+
+        public async Task DeleteOrderAsync(string ordreNummer)
+        {
+            var ordre = await _context.IndkobsOrdre
+                .FirstOrDefaultAsync(o => o.ordreNummer == ordreNummer); // Ret metode til at finde ordre korrekt
+
+            if (ordre != null)
+            {
+                _context.IndkobsOrdre.Remove(ordre);
+                await _context.SaveChangesAsync();
+            }
+            else
+            {
+                throw new KeyNotFoundException($"Ordren med ordreNummer {ordreNummer} blev ikke fundet.");
+            }
+        }
+
+
     }
 }
 

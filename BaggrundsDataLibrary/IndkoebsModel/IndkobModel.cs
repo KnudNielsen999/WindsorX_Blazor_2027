@@ -14,6 +14,7 @@ namespace WindsorX_2027.IndkoebsModel
         public string? ordreDetaljer { get; set; }
         public string? referenceDetaljer { get; set; }
         public string? leverandorNummer { get; set; }
+        public bool open { get; set; } = true; // status om ordren er aktiv
 
         // Liste af ordrelinjer knyttet til dette indkøb
         public List<OrdreModel> ordreLinjer { get; set; } = new List<OrdreModel>();

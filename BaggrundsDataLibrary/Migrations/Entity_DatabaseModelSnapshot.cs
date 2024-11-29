@@ -70,6 +70,9 @@ namespace BaggrundsDataLibrary.Migrations
                     b.Property<string>("leverandorNummer")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("open")
+                        .HasColumnType("bit");
+
                     b.Property<DateTime>("ordreDato")
                         .HasColumnType("datetime2");
 
@@ -92,7 +95,8 @@ namespace BaggrundsDataLibrary.Migrations
                             Id = 1,
                             kundeNummer = "1",
                             leverandorNummer = "1",
-                            ordreDato = new DateTime(2024, 11, 27, 10, 56, 19, 262, DateTimeKind.Local).AddTicks(4646),
+                            open = true,
+                            ordreDato = new DateTime(2024, 11, 29, 8, 43, 56, 942, DateTimeKind.Local).AddTicks(9369),
                             ordreNummer = "1"
                         },
                         new
@@ -100,7 +104,8 @@ namespace BaggrundsDataLibrary.Migrations
                             Id = 2,
                             kundeNummer = "1",
                             leverandorNummer = "1",
-                            ordreDato = new DateTime(2024, 11, 27, 10, 56, 19, 262, DateTimeKind.Local).AddTicks(4688),
+                            open = true,
+                            ordreDato = new DateTime(2024, 11, 29, 8, 43, 56, 942, DateTimeKind.Local).AddTicks(9456),
                             ordreNummer = "1"
                         },
                         new
@@ -108,7 +113,8 @@ namespace BaggrundsDataLibrary.Migrations
                             Id = 3,
                             kundeNummer = "1",
                             leverandorNummer = "1",
-                            ordreDato = new DateTime(2024, 11, 27, 10, 56, 19, 262, DateTimeKind.Local).AddTicks(4691),
+                            open = true,
+                            ordreDato = new DateTime(2024, 11, 29, 8, 43, 56, 942, DateTimeKind.Local).AddTicks(9459),
                             ordreNummer = "2"
                         },
                         new
@@ -116,7 +122,8 @@ namespace BaggrundsDataLibrary.Migrations
                             Id = 4,
                             kundeNummer = "1",
                             leverandorNummer = "1",
-                            ordreDato = new DateTime(2024, 11, 27, 10, 56, 19, 262, DateTimeKind.Local).AddTicks(4693),
+                            open = true,
+                            ordreDato = new DateTime(2024, 11, 29, 8, 43, 56, 942, DateTimeKind.Local).AddTicks(9461),
                             ordreNummer = "2"
                         });
                 });

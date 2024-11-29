@@ -2,6 +2,7 @@
 {
     using Microsoft.EntityFrameworkCore;
     using WindsorX_2027.DB_Entity;
+    using WindsorX_2027.IndkoebsModel;
     using WindsorX_2027.LagerModel;
 
     public class LagerRepository : ILagerRepository
@@ -78,6 +79,10 @@
             var data = await _context.LagerData.ToListAsync();
             return data.Where(p => p.vareNummer == varenummer).ToList();
         }
+
+       
+
+
     }
 }
   

@@ -1,0 +1,100 @@
+﻿@page "/oversigt-indkoeb"
+@using WindsorX_2027.IndkoebsModel
+@using WindsorX_2027.IndkoebsRepositoryMappe
+@inject IIndkobRepository IndkobsRepository
+@inject NavigationManager Navigation
+@inject IJSRuntime JsRuntime
+
+
+<h3>Åbne Indkøbsordrer</h3>
+
+@if (indkobsListe == null)
+{
+    <p>Indlæser...</p>
+}
+else if (indkobsListe.Count == 0)
+{
+    <p class="text-warning">Der er ingen åbne indkøbsordrer.</p>
+}
+else
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Ordre Nummer</th>
+                <th>Kunde Nummer</th>
+                <th>Leverandør Nummer</th>
+                <th>Ordre Dato</th>
+                <th>Status</th>
+                <th>Handlinger</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var ordre in indkobsListe)
+            {
+                <tr>
+                    <td>@ordre.ordreNummer</td>
+                    <td>@ordre.kundeNummer</td>
+                    <td>@ordre.leverandorNummer</td>
+                    <td>@ordre.ordreDato.ToString("dd-MM-yyyy")</td>
+                    <td>@ordre.open</td>
+                    <td>
+                        <button class="btn btn-danger btn-sm" @onclick="() => SletOrdre(ordre.ordreNummer)">Slet</button>
+                        <button class="btn btn-primary btn-sm" @onclick="() => RedigerOrdre(ordre.ordreNummer)">Rediger</button>
+                        <button class="btn btn-danger btn-sm" @onclick="() => LukOrdre(ordre.ordreNummer)">Luk</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private List<IndkobModel>? indkobsListe;
+
+    protected override async Task OnInitializedAsync()
+    {
+        // Hent åbne indkøbsordrer
+        indkobsListe = await IndkobsRepository.GetOpenIndkobsAsync();
+    }
+
+    private void RedigerOrdre(string ordreNummer)
+    {
+        // Naviger til redigeringssiden for den valgte ordre
+        Navigation.NavigateTo($"/retindkoeb?ordreNummer={ordreNummer}");
+    }
+
+    private async Task LukOrdre(string ordreNummer)
+    {
+        // Luk ordren (her skal du tilføje logik i din repository)
+        await IndkobsRepository.CloseOrderAsync(ordreNummer);
+
+        // Opdater listen over åbne ordrer
+        indkobsListe = await IndkobsRepository.GetOpenIndkobsAsync();
+        StateHasChanged();
+    }
+
+    private async Task SletOrdre(string ordreNummer)
+    {
+        bool confirmDelete = await JsRuntime.InvokeAsync<bool>("confirm", $"Er du sikker på, at du vil slette ordren {ordreNummer}?");
+        if (!confirmDelete)
+        {
+            return;
+        }
+
+        try
+        {
+            // Kald repository for at slette ordren
+            await IndkobsRepository.DeleteOrderAsync(ordreNummer);
+
+            // Opdater listen over åbne ordrer
+            indkobsListe = await IndkobsRepository.GetOpenIndkobsAsync();
+            StateHasChanged();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Fejl ved sletning: {ex.Message}");
+        }
+    }
+
+}
