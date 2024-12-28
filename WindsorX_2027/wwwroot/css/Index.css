@@ -1,11 +1,21 @@
 ﻿body {
-  
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f0f0f0; /* Baggrundsfarve uden for app */
+    width: 1500px;
+    height: 1000px;
+    overflow: hidden; /* Forhindrer scroll */
+}
 
+#app-container {
+    width: 1500px;
+    height: 1000px;
+    background-color: white; /* Baggrund for indholdsområdet */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Æstetisk skygge */
+    overflow: hidden; /* Skjul scroll inde i app-container */
+    display: flex;
+    flex-direction: column; /* Sørg for, at indhold kan stables */
 }
- .baggrund{
-    background-image: url('/Billeder/WindsorForside.png'); /* Indsæt stien til dit billede her */
-    background-size: cover; /* Gør at billedet fylder hele baggrunden */
-    background-position: center; /* Centrer billedet */
-    background-repeat: no-repeat; /* Forhindrer gentagelse af billedet */
-    height: 100vh; /* Sæt højden, så baggrunden fylder hele siden */
-}
+
