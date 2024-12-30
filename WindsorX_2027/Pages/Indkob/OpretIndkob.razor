@@ -1,6 +1,7 @@
 ﻿@page "/indkob"
 @inject IIndkobRepository IndkobsRepository
 @inject ILagerRepository LagerRepository
+@inject NavigationManager Navigation
 @using WindsorX_2027.IndkoebsModel
 @using WindsorX_2027.IndkoebsRepositoryMappe
 @using WindsorX_2027.LagerRepositoryMappe
@@ -106,8 +107,18 @@
             <button type="submit" class="btn btn-success  py-2 my-2 w-100">Gem Indkøbsordre</button>
         </div>
 
+
+        <div class="col-2  align-items-start">
+            <button class="btn btn-primary py-2 my-2 w-100" @onclick="Indkobmenu1">Vis Indkøb Oversigt</button>
+        </div>
+
     </div>
+
+    
 </EditForm>
+
+
+
 
 @if (errorMessage != null)
 {
@@ -212,5 +223,12 @@
         }
 
     }
+
+    private void Indkobmenu1()
+    {
+
+        Navigation.NavigateTo("/IndkobMenu1", forceLoad: true);
+    }
+
 
 }

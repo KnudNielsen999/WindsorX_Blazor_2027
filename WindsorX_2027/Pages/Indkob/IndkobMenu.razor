@@ -1,0 +1,53 @@
+﻿@page "/IndkobMenu1"
+@inject NavigationManager Navigation
+
+<link rel="stylesheet" href="css/baggrund.css">
+<style>
+    #menuplacering{
+        position: absolute;
+        top: 55%;
+       
+    }
+</style>
+
+
+<br />
+
+<div id="menuplacering" class="col-12">
+    <h1 style="font-size:60px; color: rgba(255, 215, 0, 0.5); text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);" class="col-9 text-center">Indkøbs-modul oversigt</h1>
+    <button style="height:150px;font-size:25px;color: #FFD700;border-color: #FFD700;" class="btn btn-outline-dark btn-lg col-2" @onclick="Indkobmenu1">Indkøbs oversigt</button>
+    <button style="height:150px;font-size:25px;color: #FFD700;border-color: #FFD700;" class="btn btn-outline-dark btn-lg col-2" @onclick="ShowIndkobOversigt">Åbne indkøbs ordre</button>
+    <button style="height:150px;font-size:25px;color: #FFD700;border-color: #FFD700;" class="btn btn-outline-dark btn-lg col-2" @onclick="OpretIndkobs_ordre">Opret indkøb</button>
+</div>
+
+<br />
+
+<div class="col-12">
+   
+    
+</div>
+
+
+<div>
+    @ActiveComponent
+</div>
+
+@code {
+    private RenderFragment? ActiveComponent;
+
+    private void ShowIndkobOversigt()
+    {
+        Navigation.NavigateTo("/oversigt-indkoeb");
+
+    }
+    private void OpretIndkobs_ordre()
+    {
+        Navigation.NavigateTo("/indkob");
+
+    }
+    private void Indkobmenu1()
+    {
+        
+        Navigation.NavigateTo("/IndkobMenu1", forceLoad: true);
+    }
+}
