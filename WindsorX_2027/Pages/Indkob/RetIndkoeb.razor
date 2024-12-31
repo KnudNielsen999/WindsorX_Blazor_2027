@@ -111,12 +111,15 @@ else
         {
             <p class="text-warning">Ingen ordrelinjer tilgængelige.</p>
         }
-        <div class="col-2 align-items-start">
-            <button type="button" class="btn btn-secondary py-2 my-2 w-100  " @onclick="AddOrdreLinje">Tilføj Ordrelinje</button>
+
+        <br/>
+
+        <div class="d-flex justify-content-between">
+            <button type="button" class="btn btn-secondary py-2 my-2 w-100 mx-1" @onclick="AddOrdreLinje">Tilføj Ordrelinje</button>
+            <button type="submit" class="btn btn-success py-2 my-2 w-100 mx-1">Gem Ændringer</button>
+            <button class="btn btn-primary py-2 my-2 w-100 mx-1" @onclick="Indkobmenu1">Vis Indkøb Oversigt</button>
         </div>
-        <div class="form-group row">
-            <button type="submit" class="btn btn-success">Gem Ændringer</button>
-        </div>
+
     </EditForm>
     <h4>@vistekst</h4>
 }
@@ -299,6 +302,12 @@ else
             ordreNummer = query["ordreNummer"];
             await HentOrdre();
         }
+    }
+
+    private void Indkobmenu1()
+    {
+
+        Navigation.NavigateTo("/IndkobMenu1", forceLoad: true);
     }
 
 }
