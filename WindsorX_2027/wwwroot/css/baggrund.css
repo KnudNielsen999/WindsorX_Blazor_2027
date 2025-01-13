@@ -1,6 +1,9 @@
 ﻿body {
-    background-image: url('/Billeder/windX.png'); /* Sæt stien til dit billede */
+    margin: 0;
+    height: 100vh; /* Sørger for, at body fylder hele skærmen */
+    background: linear-gradient(to bottom, #ffffff 20%, rgba(0, 0, 0, 0) 20%), url('/Billeder/windX.png');
     background-size: cover; /* Sørger for, at billedet dækker hele baggrunden */
     background-repeat: no-repeat; /* Undgår gentagelse af billedet */
     background-position: center; /* Centrerer billedet */
+    background-attachment: fixed; /* Fixer baggrunden ved scroll */
 }
