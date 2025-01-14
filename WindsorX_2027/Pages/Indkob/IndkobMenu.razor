@@ -1,53 +1,24 @@
 ﻿@page "/IndkobMenu1"
 @inject NavigationManager Navigation
 
-<link rel="stylesheet" href="~/css/baggrund.css">
+<link rel="stylesheet" href="/css/baggrund.css">
 
-<style>
-    #menuplacering{
-        margin:0;
-        padding:0;
-        left:250px;
-        position: absolute;
-        top: 14%;
-        width: 100%;
-        height: 84%; /* Menuens højde fylder de første 20% */
-        text-align: left;
-        background-color: rgba(255, 215, 0, 0.1); /* 0.5 er gennemsigtighed fra 0 (helt transparent) til 1 (helt uigennemsigtig) */
 
-        z-index: 10; /* Sørger for, at menuen er over baggrunden */
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Valgfri skygge for visuelt løft */
-       
-    }
-
-    #menuplacering_overskrift {
-        margin: 0;
-        padding: 10px;
-        left: 250px;
-        position: absolute;
-        top: 5%;
-        width: 100%;
-        height: 9%; /* Menuens højde fylder de første 20% */
-        text-align: center;
-        background-color: rgba(255, 215, 0, 0.1); /* 0.5 er gennemsigtighed fra 0 (helt transparent) til 1 (helt uigennemsigtig) */
-
-        
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Valgfri skygge for visuelt løft */
-    }
-</style>
 
 
 <br />
+
 
 <div id="menuplacering_overskrift" class="col-12">
     <h1 style="font-size:65px; color: rgba(255, 215, 0, 1.0); text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2)">Indkøbs-menu</h1>
 </div>
 
-
+<br />
+<br />
 <div id="menuplacering" class="col-12">
     
-    <button style="height:150px;font-size:30px;color:#FFD700;border-color: #FFD700;" class="btn btn-outline-dark btn-lg col-3" @onclick="Indkobmenu1">Indkøbs menu</button>
-    <button style="height:150px;font-size:30px;color: #FFD700;border-color: #FFD700;" class="btn btn-outline-dark btn-lg col-3" @onclick="ShowIndkobOversigt">Åbne indkøbs ordre</button>
+    <button style="height:150px;font-size:30px;color:#FFD700;border-color: #FFD700;" class="btn btn-outline-dark btn-lg col-4" @onclick="Indkobmenu1">Indkøbs menu</button>
+    <button style="height:150px;font-size:30px;color: #FFD700;border-color: #FFD700;" class="btn btn-outline-dark btn-lg col-4" @onclick="ShowIndkobOversigt">Åbne indkøbs ordre</button>
     <button style="height:150px;font-size:30px;color: #FFD700;border-color: #FFD700;" class="btn btn-outline-dark btn-lg col-3" @onclick="OpretIndkobs_ordre">Opret indkøb</button>
 </div>
 

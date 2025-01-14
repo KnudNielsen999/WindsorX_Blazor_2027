@@ -1,10 +1,20 @@
 ﻿@page "/"
 @layout MainLayout
-<link rel="stylesheet" href="css/baggrund.css">
+
 
 <PageTitle>WindsorX 2027</PageTitle>
 
-
+<style>
+    body {
+        margin: 0;
+        height: 100vh; /* Sørger for, at body fylder hele skærmen */
+        background: url('/Billeder/windX.png');
+        background-size: cover; /* Sørger for, at billedet dækker hele baggrunden */
+        background-repeat: no-repeat; /* Undgår gentagelse af billedet */
+        background-position: center; /* Centrerer billedet */
+        background-attachment: fixed; /* Fixer baggrunden ved scroll */
+    }
+</style>
 
 
 
