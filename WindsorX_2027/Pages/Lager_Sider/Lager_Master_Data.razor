@@ -1,3 +1,80 @@
 ﻿@page "/lager_masterdata"
+@inject NavigationManager Navigation
 
-<Lagerliste/>
+
+
+
+
+<link rel="stylesheet" href="/css/baggrund.css">
+
+
+
+
+<br />
+
+
+<div id="menuplacering_overskrift" class="col-12">
+    <h1 style="font-size:65px; color: rgb(238, 238, 238); text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2)">Lager-menu</h1>
+</div>
+
+<br />
+<br />
+<div id="menuplacering" class="col-12">
+    <button style="height:150px;font-size:30px;color:rgb(238, 238, 238);"
+            class="btn btn-outline-dark btn-lg col-4"
+            @onclick="Masterdata">
+        Master Data
+    </button>
+    <button style="height:150px;font-size:30px;color:rgb(238, 238, 238);"
+            class="btn btn-outline-dark btn-lg col-4"
+            @onclick="ShowIndkobOversigt">
+        Status liste (ikke aktiv endnu)
+    </button>
+</div>
+
+<div id="menuplacering1" class="col-12">
+    <button style="height:150px;font-size:30px;color:rgb(238, 238, 238);"
+            class="btn btn-outline-dark btn-lg col-3"
+            @onclick="OpretIndkobs_ordre">
+        Opret indkøb
+    </button>
+    <button style="height:150px;font-size:30px;color:rgb(238, 238, 238);"
+            class="btn btn-outline-dark btn-lg col-3"
+            @onclick="VareModtagelse">
+        Vare Modtagelse (under udarbejdelse)
+    </button>
+</div>
+
+
+
+
+<div>
+    @ActiveComponent
+</div>
+
+@code {
+    private RenderFragment? ActiveComponent;
+
+    private void ShowIndkobOversigt()
+    {
+        Navigation.NavigateTo("/");
+
+    }
+    private void OpretIndkobs_ordre()
+    {
+        Navigation.NavigateTo("/indkob");
+
+    }
+    private void Masterdata()
+    {
+
+        Navigation.NavigateTo("/Displaylager");
+    }
+
+    private void VareModtagelse()
+    {
+
+        Navigation.NavigateTo("/");
+    }
+}
+

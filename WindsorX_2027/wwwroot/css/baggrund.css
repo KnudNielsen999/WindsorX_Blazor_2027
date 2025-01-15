@@ -8,7 +8,7 @@
     padding: 0;
     left: 250px;
     position: absolute;
-    top: 240px;
+    top: 180px;
     width: 100%;
     height: 150px; /* Menuens højde fylder de første 20% */
     text-align: left;
@@ -19,12 +19,28 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Valgfri skygge for visuelt løft */
 }
 
+
+#menuplacering1 {
+    margin: 0;
+    padding: 0;
+    left: 250px;
+    position: absolute;
+    top: 340px;
+    width: 100%;
+    height: 150px; /* Menuens højde */
+    text-align: left;
+    background-color: rgba(212, 190, 228, 0.6); /* Violet med gennemsigtighed */
+    z-index: 10;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Valgfri skygge */
+}
+
+
 #menuplacering_overskrift {
     margin: 0;
     padding: 10px;
     left: 250px;
     position: absolute;
-    top: 5%;
+    top: 50px;
     width: 100%;
     height: 9%; /* Menuens højde fylder de første 20% */
     text-align: center;
@@ -33,3 +49,6 @@
 
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Valgfri skygge for visuelt løft */
 }
+
+
+

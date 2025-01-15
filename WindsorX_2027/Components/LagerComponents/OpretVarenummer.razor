@@ -11,9 +11,7 @@
 <link href="\css\Lager.css" rel="stylesheet" />
 
 
-<div class="top-menu">
-    <TopMenuBootstrap />
-</div>
+
 
 @if (errorMessage != null)
 {
@@ -25,7 +23,8 @@
 
 <div class="col-3 ">
 
-    <h3>Opret Varenummer</h3>
+    <h3>@PageTitle</h3>
+
     <EditForm Model="@viewModel" OnValidSubmit="@CreateOrUpdateItem">
         <DataAnnotationsValidator />
         <div class="form-group">
