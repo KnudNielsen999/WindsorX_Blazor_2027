@@ -15,5 +15,7 @@ namespace WindsorX_2027.IndkoebsRepositoryMappe
         Task<List<IndkobModel?>> GetOpenIndkobsAsync();
         Task CloseOrderAsync(string ordreNummer);
         Task DeleteOrderAsync(string ordreNummer);
+        Task OpdaterBestiltAntalForVarenummerAsync(string varenummer);
     }
+
 }

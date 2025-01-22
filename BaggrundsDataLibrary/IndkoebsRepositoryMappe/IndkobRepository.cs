@@ -8,6 +8,7 @@
     using System.Threading.Tasks;
     using WindsorX_2027.LagerRepositoryMappe;
     using BaggrundsDataLibrary.LagerTransAktioner;
+    
 
     public class IndkobRepository : IIndkobRepository
     {
@@ -194,6 +195,39 @@
                 throw new KeyNotFoundException($"Ordren med ordreNummer {ordreNummer} blev ikke fundet.");
             }
         }
+
+
+        public async Task OpdaterBestiltAntalForVarenummerAsync(string varenummer)
+        {
+            // Hent alle åbne ordrer med ordrelinjer for det givne varenummer
+            var ordrerMedVarenummer = await _context.IndkobsOrdre
+                .Include(i => i.ordreLinjer)
+                .Where(i => i.open && i.ordreLinjer.Any(l => l.vareNummer == varenummer))
+                .ToListAsync();
+
+            // Beregn det samlede antal for varenummeret
+            var samletAntal = ordrerMedVarenummer
+                .SelectMany(o => o.ordreLinjer)
+                .Where(l => l.vareNummer == varenummer)
+                .Sum(l => l.ordreAntal ?? 0);
+
+            // Hent lagerposten for varenummeret
+            var lagerPost = await _lagerRepository.GetVareByVarenummerAsync(varenummer);
+            if (lagerPost != null)
+            {
+                // Opdater lagerets bestilt antal
+                lagerPost.bestiltAntal = samletAntal;
+
+                // Gem opdateringen i lageret
+                await _lagerRepository.UpdateItemAsync(lagerPost);
+            }
+            else
+            {
+                throw new KeyNotFoundException($"Lagerpost for varenummer {varenummer} blev ikke fundet.");
+            }
+        }
+
+
 
 
 

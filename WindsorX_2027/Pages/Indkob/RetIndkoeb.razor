@@ -206,6 +206,23 @@ else
     }
 
 
+
+    private async Task OpdaterLagerData(IndkobModel indkob)
+    {
+        // Gå igennem hver ordrelinje og opdater lagerets bestilt antal for hver vare
+        // går alle ordre igennem for dette varenummer og akkumulerer antal stk som stå åbne på indkøbet
+        foreach (var ordreLinje in indkob.ordreLinjer)
+        {
+            if (!string.IsNullOrWhiteSpace(ordreLinje.vareNummer))
+            {
+                await IndkobsRepository.OpdaterBestiltAntalForVarenummerAsync(ordreLinje.vareNummer);
+
+            }
+        }
+    }
+
+
+
     private async Task OnVarenummerChanged(OrdreModel ordreLinje)
     {
         var vare = await LagerRepository.GetVareByVarenummerAsync(ordreLinje.vareNummer);
@@ -256,41 +273,11 @@ else
         }
     }
 
+   
+    
 
-    private async Task OpdaterLagerData(IndkobModel indkob)
-    {
-        foreach (var ordreLinje in indkob.ordreLinjer)
-        {
-            // Hent varen baseret på vareNummer i ordreLinje
-            var vareopdatering = await LagerRepository.GetVareByVarenummerAsync(ordreLinje.vareNummer);
-            var dif = ordreLinje.ordreAntal- vareopdatering.bestiltAntal;
 
-            // Hvis varen findes i lageret, opdater bestillingsdatoen og bestilt antal
-            if (vareopdatering != null)
-            {
-
-                if (vareopdatering.bestiltAntal == null || vareopdatering.bestiltAntal == 0)
-                {
-                    vareopdatering.bestiltAntal = Math.Max(ordreLinje.ordreAntal ?? 0, 0); // Undgå negative værdier
-                }
-                else
-                {
-                    vareopdatering.bestiltAntal = Math.Max(vareopdatering.bestiltAntal.Value + (dif ?? 0), 0); // Undgå negative værdier
-                }
-
-                
-                vareopdatering.sidsteBestillingsDato = indkob.ordreDato;
-
-                await LagerRepository.UpdateItemAsync(vareopdatering);
-            }
-            else
-            {
-                errorMessage = $"Varenummer {ordreLinje.vareNummer} blev ikke fundet i lageret.";
-                Console.WriteLine(errorMessage);
-            }
-        }
-
-    }
+   
 
     protected override async Task OnInitializedAsync()
     {
