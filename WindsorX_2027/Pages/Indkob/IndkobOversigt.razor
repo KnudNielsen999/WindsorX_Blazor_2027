@@ -69,15 +69,38 @@ else
         Navigation.NavigateTo($"/retindkoeb?ordreNummer={ordreNummer}");
     }
 
+    // private async Task LukOrdre(string ordreNummer)
+    // {
+    //     // Luk ordren (her skal du tilføje logik i din repository)
+    //     await IndkobsRepository.CloseOrderAsync(ordreNummer);
+    //     await OpdaterLagerData(indkob);
+    //     // Opdater listen over åbne ordrer
+    //     indkobsListe = await IndkobsRepository.GetOpenIndkobsAsync();
+    //     StateHasChanged();
+    // }
+
     private async Task LukOrdre(string ordreNummer)
     {
-        // Luk ordren (her skal du tilføje logik i din repository)
+        // Luk ordren i databasen
         await IndkobsRepository.CloseOrderAsync(ordreNummer);
+
+        // Hent den fulde ordre
+        var indkob = await IndkobsRepository.GetIndkobByOrdreNummerAsync(ordreNummer);
+        if (indkob != null)
+        {
+            // Opdater lagerdata
+            await OpdaterLagerData(indkob);
+        }
 
         // Opdater listen over åbne ordrer
         indkobsListe = await IndkobsRepository.GetOpenIndkobsAsync();
         StateHasChanged();
     }
+
+
+
+
+
 
     private async Task SletOrdre(string ordreNummer)
     {
@@ -99,6 +122,20 @@ else
         catch (Exception ex)
         {
             Console.WriteLine($"Fejl ved sletning: {ex.Message}");
+        }
+    }
+
+    private async Task OpdaterLagerData(IndkobModel indkob)
+    {
+        // Gå igennem hver ordrelinje og opdater lagerets bestilt antal for hver vare
+        // går alle ordre igennem for dette varenummer og akkumulerer antal stk som stå åbne på indkøbet
+        foreach (var ordreLinje in indkob.ordreLinjer)
+        {
+            if (!string.IsNullOrWhiteSpace(ordreLinje.vareNummer))
+            {
+                await IndkobsRepository.OpdaterBestiltAntalForVarenummerAsync(ordreLinje.vareNummer);
+
+            }
         }
     }
 

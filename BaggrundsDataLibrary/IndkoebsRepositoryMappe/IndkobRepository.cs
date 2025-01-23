@@ -217,6 +217,7 @@
             {
                 // Opdater lagerets bestilt antal
                 lagerPost.bestiltAntal = samletAntal;
+                lagerPost.sidsteBestillingsDato = DateTime.Now;
 
                 // Gem opdateringen i lageret
                 await _lagerRepository.UpdateItemAsync(lagerPost);

@@ -131,16 +131,20 @@
     private string? errorMessage;
     private string? vistekst;
 
+
     private void AddOrdreLinje()
     {
 
         indkob?.ordreLinjer.Add(new OrdreModel());
     }
 
+
+
     private void RemoveOrdreLinje(OrdreModel ordreLinje)
     {
         indkob?.ordreLinjer.Remove(ordreLinje);
     }
+
 
 
     private async Task EnsureStamdataForOrdrelinjer()
@@ -168,8 +172,9 @@
             await OpdaterLagerData(indkob);
 
             vistekst = "Indkøbsordre gemt!";
-            indkob = new IndkobModel();
+            //indkob = new IndkobModel();
             errorMessage = null;
+            StateHasChanged(); // Tving komponenten til at opdatere
         }
         catch (Exception ex)
         {
@@ -198,31 +203,23 @@
     }
 
 
+
     private async Task OpdaterLagerData(IndkobModel indkob)
     {
+        // Gå igennem hver ordrelinje og opdater lagerets bestilt antal for hver vare
+        // går alle ordre igennem for dette varenummer og akkumulerer antal stk som stå åbne på indkøbet
         foreach (var ordreLinje in indkob.ordreLinjer)
         {
-            // Hent varen baseret på vareNummer i ordreLinje
-            var vareopdatering = await LagerRepository.GetVareByVarenummerAsync(ordreLinje.vareNummer);
-            
-
-            // Hvis varen findes i lageret, opdater bestillingsdatoen og bestilt antal
-            if (vareopdatering != null)
+            if (!string.IsNullOrWhiteSpace(ordreLinje.vareNummer))
             {
-                vareopdatering.sidsteBestillingsDato = indkob.ordreDato;
-                //vareopdatering.bestiltAntal = ordreLinje.ordreAntal; 
-                vareopdatering.bestiltAntal = (vareopdatering.bestiltAntal ?? 0) + (ordreLinje.ordreAntal ?? 0); // Brug nul hvis nogen af dem er null
+                await IndkobsRepository.OpdaterBestiltAntalForVarenummerAsync(ordreLinje.vareNummer);
 
-                await LagerRepository.UpdateItemAsync(vareopdatering);
-            }
-            else
-            {
-                errorMessage = $"Varenummer {ordreLinje.vareNummer} blev ikke fundet i lageret.";
-                Console.WriteLine(errorMessage);
             }
         }
-
     }
+
+
+
 
     private void Indkobmenu1()
     {
