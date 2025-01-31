@@ -1,0 +1,124 @@
+﻿@page "/indkob/varemodtagelse"
+@using IndkoebsRepositoryMappe
+@inject IIndkobRepository IndkobRepository
+
+<h3>Varemodtagelse</h3>
+
+<div>
+    <label for="ordreNummer">Indtast Ordrenummer:</label>
+    <input type="text" id="ordreNummer" @bind="ordreNummer" />
+    <button @onclick="HentOrdre">Hent Ordre</button>
+</div>
+
+@if (!string.IsNullOrEmpty(fejlBesked))
+{
+    <div class="alert alert-danger">@fejlBesked</div>
+}
+
+@if (ordre != null)
+{
+    <div>
+        <h4>Varer i Ordre @ordre.ordreNummer</h4>
+
+        @if (ordre.ordreLinjer != null && ordre.ordreLinjer.Count > 0)
+        {
+            @foreach (var ordreLinje in ordre.ordreLinjer)
+            {
+                <div class="border rounded p-3 mb-3">
+                    <input type="hidden" @bind="ordreLinje.IndkobModelId" />
+                    <div class="form-group row">
+                        <div class="col-sm-2">
+                            <label>Vare Nummer:</label>
+                            <InputText class="form-control" @bind-Value="ordreLinje.vareNummer" disabled />
+                        </div>
+                        <div class="col-sm-2">
+                            <label>Vare Tekst:</label>
+                            <InputText class="form-control" @bind-Value="ordreLinje.vareTekst" disabled />
+                        </div>
+                        <div class="col-sm-1">
+                            <label>Antal:</label>
+                            <InputNumber TValue="double?" class="form-control" @bind-Value="ordreLinje.ordreAntal" />
+                        </div>
+                        <div class="col-sm-1">
+                            <label>Enheder:</label>
+                            <InputText class="form-control" @bind-Value="ordreLinje.enheder" disabled />
+                        </div>
+                        <div class="col-sm-2">
+                            <label>Kost Pris:</label>
+                            <InputNumber class="form-control" @bind-Value="ordreLinje.kostPris" disabled />
+                        </div>
+                        <div class="col d-flex justify-content-center align-items-center">
+                            <button type="button" class="btn btn-primary w-100 h-75" @onclick="() => Linjemodtagelse(ordreLinje)">Godkend varemodtagelse</button>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+        <button @onclick="ModtagVarer">Modtag Varer</button>
+    </div>
+}
+
+@code {
+    private string ordreNummer;
+    private IndkobModel ordre;
+    private string fejlBesked;
+
+    private async Task HentOrdre()
+    {
+        try
+        {
+            ordre = await IndkobRepository.GetIndkobByOrdreNummerAsync(ordreNummer);
+
+            if (ordre == null)
+            {
+                fejlBesked = "Ordren blev ikke fundet.";
+            }
+            else
+            {
+                fejlBesked = string.Empty;
+            }
+        }
+        catch (Exception ex)
+        {
+            fejlBesked = $"Der opstod en fejl: {ex.Message}";
+        }
+    }
+
+    private async Task ModtagVarer()
+    {
+        if (ordre != null)
+        {
+            foreach (var vare in ordre.ordreLinjer)
+            {
+                // Opdater lageret og indkøbsordren her
+                // ...
+            }
+
+            // Opdater indkøbsordren som modtaget
+            ordre.open = false;
+            await IndkobRepository.UpdateIndkobAsync(ordre);
+        }
+    }
+
+    private async Task Linjemodtagelse(OrdreModel ordreLinje)
+    {
+        try
+        {
+            // Opdater ordrelinjen i databasen
+            var existingOrdre = await IndkobRepository.GetIndkobByIdAsync(ordreLinje.IndkobModelId);
+            if (existingOrdre != null)
+            {
+                var existingLinje = existingOrdre.ordreLinjer.FirstOrDefault(o => o.Id == ordreLinje.Id);
+                if (existingLinje != null)
+                {
+                    existingLinje.ordreAntal = ordreLinje.ordreAntal;
+                    await IndkobRepository.UpdateIndkobAsync(existingOrdre);
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            fejlBesked = $"Der opstod en fejl ved opdatering af varelinjen: {ex.Message}";
+        }
+    }
+}

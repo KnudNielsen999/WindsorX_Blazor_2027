@@ -11,9 +11,10 @@
 }
 
 #listeoverskrift {
-    background-color: red;
+    background-color: lightgray;
     position: sticky;
     top: 70px;
+    font-size:20px;
     text-align:right;
    
 }
@@ -50,15 +51,15 @@ h3 {
     padding: 10px 10px 10px 10px;
     height: 50px;
     color: white;
-    background-color: blue;
+    background-color: black;
     text-align: center;
 }
 .besked {
     padding: 10px 10px 10px 10px;
     margin: 0px 0px 0px 0px;
-    height: 35px;
+    height: 30px;
     color: red;
-    background-color: blue;
+    background-color: black;
     text-align:center;
 }
 .indtastvarenummer{

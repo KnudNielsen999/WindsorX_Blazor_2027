@@ -16,18 +16,18 @@
 <br />
 <br />
 <div id="menuplacering" class="col-12">
-    
+
     <button style="height:150px;font-size:30px;color: rgb(238, 238, 238);border-color: rgb(59, 30, 84);" class="btn btn-outline-dark btn-lg col-3" @onclick="OpretIndkobs_ordre">Opret indkøb</button>
     <button style="height:150px;font-size:30px;color: rgb(238, 238, 238);border-color: rgb(59, 30, 84);" class="btn btn-outline-dark btn-lg col-4" @onclick="ShowIndkobOversigt">Åbne indkøbs ordre</button>
     <button style="height:150px;font-size:30px;color:rgb(238, 238, 238);border-color: rgb(59, 30, 84);" class="btn btn-outline-dark btn-lg col-4" @onclick="lukkedeIndkoeb">Lukkede indkøb</button>
-
+    <button style="height:150px;font-size:30px;color: rgb(238, 238, 238);border-color: rgb(59, 30, 84);" class="btn btn-outline-dark btn-lg col-4" @onclick="modtagVare">Modtag vare</button>
 </div>
 
 <br />
 
 <div class="col-12">
-   
-    
+
+
 </div>
 
 
@@ -36,6 +36,8 @@
 </div>
 
 @code {
+    
+   
     private RenderFragment? ActiveComponent;
 
     private void ShowIndkobOversigt()
@@ -52,5 +54,9 @@
     {
         
         Navigation.NavigateTo("/IndkobMenu1", forceLoad: true);
+    }
+    private void modtagVare()
+    {
+        Navigation.NavigateTo("/indkob/varemodtagelse");
     }
 }
