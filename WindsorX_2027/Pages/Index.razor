@@ -1,20 +1,28 @@
 ﻿@page "/"
 @layout MainLayout
 
-
 <PageTitle>WindsorX 2027</PageTitle>
-
 <style>
-    body {
-        margin: 0;
-        height: 100vh; /* Sørger for, at body fylder hele skærmen */
-        background: url('/Billeder/windX.png');
-        background-size: cover; /* Sørger for, at billedet dækker hele baggrunden */
-        background-repeat: no-repeat; /* Undgår gentagelse af billedet */
-        background-position: center; /* Centrerer billedet */
-        background-attachment: fixed; /* Fixer baggrunden ved scroll */
+    .forside1 {
+        background: url('/Billeder/Baggrund2025.png') no-repeat center center;
+        background-size: contain; /* Viser hele billedet */
+        background-repeat: no-repeat;
+        background-position: center;
+        background-attachment: fixed;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center; /* Vertikal centrering af indholdet */
+        align-items: center; /* Horisontal centrering */
+        padding: 2rem;
     }
+
+
 </style>
+<div class="forside1">
+    
+</div>
+
 
 
 

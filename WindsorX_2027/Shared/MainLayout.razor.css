@@ -67,6 +67,26 @@ main {
         padding-left: 2rem !important;
         padding-right: 1.5rem !important;
     }
+
+    body {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        background: url('/Billeder/Baggrund2025.png') no-repeat center center fixed;
+        background-size: cover;
+    }
+
+    .app-container {
+        display: flex;
+        height: 100vh;
+    }
+
+    .main-content {
+        flex-grow: 1;
+        padding: 30px;
+    }
+
+
     
 
 }

@@ -1,0 +1,17 @@
+﻿.forside1 {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    background: url('/Billeder/Baggrund2025.png') no-repeat center center fixed;
+    background-size: cover;
+}
+
+.app-container {
+    display: flex;
+    height: 100vh;
+}
+
+.main-content {
+    flex-grow: 1;
+    padding: 30px;
+}

@@ -1,4 +1,7 @@
-﻿<div class="top-row ps-3 navbar navbar-dark">
+﻿@inject NavigationManager Navigation
+
+
+<div class="top-row ps-3 navbar navbar-dark">
     <div class="container-fluid">
         <a class="navbar-brand" href="">WindsorX_2027</a>
         <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
@@ -8,33 +11,80 @@
 </div>
 
 <div class="@NavMenuCssClass">
-    <nav class="flex-column">
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="oi oi-home" aria-hidden="true"></span> Forside
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="lager_masterdata">
-                <span class="oi oi-list" aria-hidden="true"></span> Lager Menu
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="IndkobMenu1">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Indkøbs Menu
-            </NavLink>
-        </div>
-       
+    <nav class="flex-column p-3">
+
+        @if (currentMenu == "main")
+        {
+            <!-- Hovedmenu -->
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+                    <span class="oi oi-home" aria-hidden="true"></span> Forside
+                </NavLink>
+            </div>
+            <div class="nav-item px-3">
+                <button class="btn btn-link nav-link text-start" @onclick='() => ShowMenu("lager")'>
+                    <span class="oi oi-list" aria-hidden="true"></span> Lager Menu
+                </button>
+            </div>
+            <div class="nav-item px-3">
+                <button class="btn btn-link nav-link text-start" @onclick='() => ShowMenu("indkob")'>
+                    <span class="oi oi-list-rich" aria-hidden="true"></span> Indkøbs Menu
+                </button>
+            </div>
+        }
+
+        else if (currentMenu == "lager")
+        {
+            <!-- Undermenu: Lager -->
+            <div class="nav-item px-3">
+                <button class="btn btn-link nav-link text-start" @onclick="GoBack">← Tilbage</button>
+            </div>
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="Displaylager">Lager oversigt</NavLink>
+            </div>
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="create-item">Opret varenummer</NavLink>
+            </div>
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="indkob/varemodtagelse">Vare Modtagelse</NavLink>
+            </div>
+
+            
+        }
+        else if (currentMenu == "indkob")
+        {
+            <!-- Undermenu: Indkøb -->
+            <div class="nav-item px-3">
+                <button class="btn btn-link nav-link text-start" @onclick="GoBack">← Tilbage</button>
+            </div>
+           
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="IndkobMenu1">Indkøbsoversigt</NavLink>
+            </div>
+        }
+
     </nav>
 </div>
 
 @code {
     private bool collapseNavMenu = true;
+    private string currentMenu = "main";
 
     private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
 
     private void ToggleNavMenu()
     {
         collapseNavMenu = !collapseNavMenu;
+    }
+
+    private void ShowMenu(string menu)
+    {
+        currentMenu = menu;
+    }
+
+    private void GoBack()
+    {
+        currentMenu = "main";
+        Navigation.NavigateTo("/");
     }
 }
