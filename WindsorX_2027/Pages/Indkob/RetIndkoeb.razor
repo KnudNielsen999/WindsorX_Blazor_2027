@@ -117,7 +117,6 @@ else
         <div class="d-flex justify-content-between">
             <button type="button" class="btn btn-secondary py-2 my-2 w-100 mx-1" @onclick="AddOrdreLinje">Tilføj Ordrelinje</button>
             <button type="submit" class="btn btn-success py-2 my-2 w-100 mx-1">Gem Ændringer</button>
-            <button class="btn btn-primary py-2 my-2 w-100 mx-1" @onclick="Indkobmenu1">Vis Indkøb Oversigt</button>
         </div>
 
     </EditForm>
@@ -291,10 +290,6 @@ else
         }
     }
 
-    private void Indkobmenu1()
-    {
-
-        Navigation.NavigateTo("/IndkobMenu1", forceLoad: true);
-    }
+    
 
 }
