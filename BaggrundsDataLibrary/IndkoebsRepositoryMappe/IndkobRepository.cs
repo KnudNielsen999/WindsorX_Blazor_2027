@@ -22,7 +22,6 @@
 
         public async Task CreateIndkobAsync(IndkobModel indkob)
         {
-            _context.Attach(indkob);
             _context.Add(indkob);
             await _context.SaveChangesAsync();
 
