@@ -6,6 +6,8 @@
 @using WindsorX_2027.IndkoebsRepositoryMappe
 @using WindsorX_2027.LagerRepositoryMappe
 
+<link rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
 
 <h2>Ret Indkøb</h2>
@@ -97,12 +99,21 @@ else
                             <label>Kost Pris:</label>
                             <InputNumber class="form-control" @bind-Value="ordreLinje.kostPris" Disabled="true" />
                         </div>
-                        <div class="col d-flex justify-content-center align-items-center">
-                            <button type="button" class="btn btn-primary w-100 h-75" @onclick="() => OnVarenummerChanged(ordreLinje)">Tjek Varenummer</button>
+                        <div class="col-auto d-flex align-items-center">
+                            <button type="button"
+                                    class="btn btn-primary btn-lg"
+                                    @onclick="() => OnVarenummerChanged(ordreLinje)">
+                                <i class="bi bi-arrow-repeat"></i> Opdater linje
+                            </button>
                         </div>
-                        <div class="col d-flex justify-content-center align-items-center px-0">
-                            <button type="button" class="btn btn-danger w-100 h-75" @onclick="() => RemoveOrdreLinje(ordreLinje)">Fjern</button>
+
+                        <div class="col-auto d-flex align-items-center">
+                            <button type="button" class="btn btn-danger flex-fill btn-lg mx-1"
+                                    @onclick="() => RemoveOrdreLinje(ordreLinje)">
+                                <i class="bi bi-trash"></i> Fjern linje
+                            </button>
                         </div>
+
                     </div>
                 </div>
             }
@@ -114,10 +125,17 @@ else
 
         <br/>
 
-        <div class="d-flex justify-content-between">
-            <button type="button" class="btn btn-secondary py-2 my-2 w-100 mx-1" @onclick="AddOrdreLinje">Tilføj Ordrelinje</button>
-            <button type="submit" class="btn btn-success py-2 my-2 w-100 mx-1">Gem Ændringer</button>
+        <div class="d-flex justify-content-center">
+            <button type="button" class="btn btn-secondary btn-lg mx-2"
+                    @onclick="AddOrdreLinje">
+                Tilføj Ordrelinje
+            </button>
+            <button type="submit" class="btn btn-success btn-lg mx-2">
+                Gem Ændringer
+            </button>
         </div>
+
+
 
     </EditForm>
     <h4>@vistekst</h4>
@@ -214,6 +232,7 @@ else
         {
             if (!string.IsNullOrWhiteSpace(ordreLinje.vareNummer))
             {
+
                 await IndkobsRepository.OpdaterBestiltAntalForVarenummerAsync(ordreLinje.vareNummer);
 
             }

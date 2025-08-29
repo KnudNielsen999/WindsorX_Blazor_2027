@@ -2,29 +2,32 @@
 @layout MainLayout
 
 <PageTitle>WindsorX 2027</PageTitle>
+
 <style>
-    .forside1 {
-        background: url('/Billeder/Baggrund2025.png') no-repeat center center;
-        background-size: contain; /* Viser hele billedet */
-        background-repeat: no-repeat;
-        background-position: center;
-        background-attachment: fixed;
-        min-height: 100vh;
-        display: flex;
-        flex-direction: column;
-        justify-content: center; /* Vertikal centrering af indholdet */
-        align-items: center; /* Horisontal centrering */
-        padding: 2rem;
+    :root {
+        --sidebar-width: 600px; /* global variabel til menuens bredde */
     }
 
-
+    .forside1 {
+        /* Reservér plads til sidebaren og udfyld resten */
+        margin-left: var(--sidebar-width, 0px);
+        width: calc(100vw - var(--sidebar-width, 0px));
+        /* Fyld hele (dynamiske) viewport-højden */
+        min-height: 100dvh; /* kan evt. fallbackes til 100vh for old mobile */
+        /* Baggrundsbillede: centreret, beskåret til at dække, uden gentagelse */
+        background: url('/Billeder/Baggrund2025.png') center / cover no-repeat;
+        /* Centrer indholdet horisontalt og vertikalt */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        /* Indre luft og forudsigelig box-model */
+        padding: 2rem;
+        box-sizing: border-box;
+    }
 </style>
+
+
 <div class="forside1">
-    
+    <!-- indhold -->
 </div>
-
-
-
-
-
 

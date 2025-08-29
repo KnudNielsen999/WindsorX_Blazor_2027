@@ -1,17 +1,9 @@
 ﻿.forside1 {
-    position: relative;
+    min-height: 100dvh;
+    background: url('/Billeder/Baggrund2025.png') center / cover no-repeat;
     display: flex;
-    flex-direction: column;
-    background: url('/Billeder/Baggrund2025.png') no-repeat center center fixed;
-    background-size: cover;
-}
-
-.app-container {
-    display: flex;
-    height: 100vh;
-}
-
-.main-content {
-    flex-grow: 1;
-    padding: 30px;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    box-sizing: border-box;
 }
