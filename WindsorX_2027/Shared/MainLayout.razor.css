@@ -1,20 +1,20 @@
-/* layout-container */
 .page {
     display: flex;
-    flex-direction: row; /* VIGTIGT: sidebar til venstre, indhold til højre */
-    min-height: 100vh;
+    flex-direction: row; /* sidebar til venstre, indhold til højre */
+    min-height: 100dvh;
 }
 
-/* selve sidebaren (ret selektor, hvis din container hedder noget andet) */
 .sidebar {
     width: var(--sidebar-width);
     flex: 0 0 var(--sidebar-width); /* fast bredde i flex-layout */
-    /* dine eksisterende baggrunde/farver må gerne blive */
+    height: 100dvh;
+    background: linear-gradient(180deg, rgb(5,39,103) 0%, #3a0647 70%);
+    display: flex;
+    flex-direction: column;
 }
 
-/* hovedindhold */
-main {
-    flex: 1; /* fyld resten af bredden */
-    min-width: 0; /* undgå vandret overflow i flex */
-    padding-left: 0; /* fjern evt. standard-venstre padding */
+.content {
+    flex: 1;
+    min-width: 0;
+    padding-left: 0;
 }

@@ -1,9 +1,0 @@
-﻿.forside1 {
-    min-height: 100dvh;
-    background: url('/Billeder/Baggrund2025.png') center / cover no-repeat;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 2rem;
-    box-sizing: border-box;
-}

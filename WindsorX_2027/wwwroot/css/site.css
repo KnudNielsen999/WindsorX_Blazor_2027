@@ -3,10 +3,11 @@
 :root {
     --sidebar-width: 600px;
 }
-
+/* ændr tallet her fremover */
 html, body {
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    margin: 0;
 }
+
 
 h1:focus {
     outline: none;

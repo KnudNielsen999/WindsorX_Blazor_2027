@@ -102,6 +102,21 @@
         background-color: #007bff;
     }
 
+/* Sørg for at nav-indholdet fylder hele sidebarens bredde */
+:where(.collapse),
+:where(nav.flex-column) {
+    width: 100%;
+    max-width: none;
+}
+
+/* Topbjælken og nav fylder også hele bredden inde i sidebaren */
+.top-row,
+.navbar,
+nav.flex-column {
+    width: 100%;
+}
+
+
 
 @media (min-width: 641px) {
     .navbar-toggler {
