@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace BaggrundsDataLibrary.Migrations
 {
     /// <inheritdoc />
-    public partial class ind : Migration
+    public partial class lager : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -131,10 +131,10 @@ namespace BaggrundsDataLibrary.Migrations
                 columns: new[] { "Id", "kundeNummer", "leverandorNummer", "open", "ordreDato", "ordreDetaljer", "ordreNummer", "referenceDetaljer" },
                 values: new object[,]
                 {
-                    { 1, "1", "1", true, new DateTime(2024, 11, 29, 8, 43, 56, 942, DateTimeKind.Local).AddTicks(9369), null, "1", null },
-                    { 2, "1", "1", true, new DateTime(2024, 11, 29, 8, 43, 56, 942, DateTimeKind.Local).AddTicks(9456), null, "1", null },
-                    { 3, "1", "1", true, new DateTime(2024, 11, 29, 8, 43, 56, 942, DateTimeKind.Local).AddTicks(9459), null, "2", null },
-                    { 4, "1", "1", true, new DateTime(2024, 11, 29, 8, 43, 56, 942, DateTimeKind.Local).AddTicks(9461), null, "2", null }
+                    { 1, "1", "1", true, new DateTime(2025, 10, 30, 11, 3, 8, 137, DateTimeKind.Local).AddTicks(3595), null, "1", null },
+                    { 2, "1", "1", true, new DateTime(2025, 10, 30, 11, 3, 8, 137, DateTimeKind.Local).AddTicks(3636), null, "1", null },
+                    { 3, "1", "1", true, new DateTime(2025, 10, 30, 11, 3, 8, 137, DateTimeKind.Local).AddTicks(3639), null, "2", null },
+                    { 4, "1", "1", true, new DateTime(2025, 10, 30, 11, 3, 8, 137, DateTimeKind.Local).AddTicks(3641), null, "2", null }
                 });
 
             migrationBuilder.InsertData(
