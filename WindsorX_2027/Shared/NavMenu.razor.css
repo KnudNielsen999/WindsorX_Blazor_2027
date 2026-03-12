@@ -1,3 +1,5 @@
+
+
 .navbar-toggler {
     background-color: rgba(255, 255, 255, 0.1);
 }
@@ -7,9 +9,6 @@
     background-color: rgba(0,0,0,0.4);
 }
 
-.navbar-brand {
-    font-size: 1.1rem;
-}
 
 .oi {
     width: 2rem;
@@ -17,6 +16,13 @@
     vertical-align: text-top;
     top: -2px;
 }
+
+.navbar-brand {
+    font-size: 34px;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
 
 .nav-item {
     font-size: 0.9rem;
@@ -114,6 +120,10 @@
 .navbar,
 nav.flex-column {
     width: 100%;
+}
+
+.side-menu {
+    font-size: 38px;
 }
 
 

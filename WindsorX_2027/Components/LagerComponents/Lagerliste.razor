@@ -4,21 +4,17 @@
 @using WindsorX_2027.LagerRepositoryMappe
 @inject ILagerRepository lagerRepository
 @inject NavigationManager Navigation
-<link href="\css\Lager.css" rel="stylesheet" />
-@layout MainLayout
 
-
-
-
+<link href="/css/Nylager.css" rel="stylesheet" />
 
 <h3>Lager oversigt</h3>
 <h4 class="besked">@besked</h4>
 
-<div class="table-container">
-    <table class="table table-striped col-12">
-        <thead>
+
+<table class="table table-striped table-hover lager-table">
+        <thead id="dataliste">
             <tr id="listeoverskrift">
-                <th>Varenummer</th>
+            <th>Varenummer</th>
                 <th>Varetekst</th>
                 <th id="talformat">Vare Mængde</th>
                 <th id="talformat">Enheder</th>
@@ -35,11 +31,11 @@
         </thead>
 
 
-
+        <tbody>
         @foreach (var item in sorteretLagerliste)
         {
-            <tbody>
-                <tr id="dataliste">
+            
+                <tr >
                     <td>@item.vareNummer</td>
                     <td>@item.vareTekst</td>
                     <td id="talformat">@string.Format("{0:F2}", item.vareMaengde)</td>
@@ -62,11 +58,10 @@
                         </button>
                     </td>
                 </tr>
-            </tbody>
+            
         }
-
+    </tbody>
     </table>
-</div>
 
 
 
@@ -98,7 +93,7 @@
     {
         
         data = await lagerRepository.GetAllItemsAsync();
-        sorteretLagerliste = data.OrderBy(p => p.vareTekst).ToList();
+        sorteretLagerliste = data.OrderBy(p => p.vareNummer).ToList();
 
 
     }

@@ -1,5 +1,11 @@
 ﻿@inject NavigationManager Navigation
-
+<style>
+    .big-menu {
+        font-size: 20px;
+        font-weight: 500;
+        color: white;
+    }
+</style>
 
 <div class="top-row ps-3 navbar navbar-dark">
     <div class="container-fluid">
@@ -11,23 +17,23 @@
 </div>
 
 <div class="@NavMenuCssClass">
-    <nav class="flex-column p-3">
+    <nav class="flex-column p-3 side-menu">
 
         @if (currentMenu == "main")
         {
             <!-- Hovedmenu -->
-            <div class="nav-item px-3">
-                <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+            <div class="nav-item px-3 ">
+                <NavLink class="nav-link big-menu" href="" Match="NavLinkMatch.All">
                     <span class="oi oi-home" aria-hidden="true"></span> Forside
                 </NavLink>
             </div>
             <div class="nav-item px-3">
-                <button class="btn btn-link nav-link text-start" @onclick='() => ShowMenu("lager")'>
+                <button class="btn btn-link nav-link text-start big-menu" @onclick='() => ShowMenu("lager")'>
                     <span class="oi oi-list" aria-hidden="true"></span> Lager Menu
                 </button>
             </div>
             <div class="nav-item px-3">
-                <button class="btn btn-link nav-link text-start" @onclick='() => ShowMenu("indkob")'>
+                <button class="btn btn-link nav-link text-start big-menu" @onclick='() => ShowMenu("indkob")'>
                     <span class="oi oi-list-rich" aria-hidden="true"></span> Indkøbs Menu
                 </button>
             </div>
@@ -37,16 +43,16 @@
         {
             <!-- Undermenu: Lager -->
             <div class="nav-item px-3">
-                <button class="btn btn-link nav-link text-start" @onclick="GoBack">← Tilbage</button>
+                <button class="btn btn-link nav-link text-start big-menu" @onclick="GoBack">Forside</button>
             </div>
             <div class="nav-item px-3">
-                <NavLink class="nav-link" href="Displaylager">Lager oversigt</NavLink>
+                <NavLink class="nav-link big-menu" href="Displaylager">Lager oversigt</NavLink>
             </div>
             <div class="nav-item px-3">
-                <NavLink class="nav-link" href="create-item">Opret varenummer</NavLink>
+                <NavLink class="nav-link big-menu" href="create-item">Opret varenummer</NavLink>
             </div>
             <div class="nav-item px-3">
-                <NavLink class="nav-link" href="indkob/varemodtagelse">Vare Modtagelse</NavLink>
+                <NavLink class="nav-link big-menu" href="indkob/varemodtagelse">Vare Modtagelse</NavLink>
             </div>
 
             
@@ -55,18 +61,18 @@
         {
             <!-- Undermenu: Indkøb -->
             <div class="nav-item px-3">
-                <button class="btn btn-link nav-link text-start" @onclick="GoBack">← Tilbage</button>
+                <button class="btn btn-link nav-link text-start big-menu" @onclick="GoBack">Forside</button>
             </div>
            
             <div class="nav-item px-3">
-                <NavLink class="nav-link" href="oversigt-indkoeb">Indkøbsoversigt</NavLink>
+                <NavLink class="nav-link big-menu" href="oversigt-indkoeb">Indkøbsoversigt</NavLink>
             </div>
             <div class="nav-item px-3">
-                <NavLink class="nav-link" href="indkob">Opret indkøbs-ordre</NavLink>
+                <NavLink class="nav-link big-menu" href="indkob">Opret indkøbs-ordre</NavLink>
             </div>
            
             <div class="nav-item px-3">
-                <NavLink class="nav-link" href="indkob/varemodtagelse">Vare Modtagelse</NavLink>
+                <NavLink class="nav-link big-menu" href="indkob/varemodtagelse">Vare Modtagelse</NavLink>
             </div>
         }
 

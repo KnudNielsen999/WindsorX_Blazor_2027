@@ -1,19 +1,16 @@
-﻿body {
-    background-color: lightgray;
-    padding: 0px 0px 0px 0px;
-    margin: 0px 0px 0px 5px;
-}
+﻿
 
-#dataliste {
-    background-color: white;
+#dataliste th {
+    color: black ;
+    font-size:20px;
+    background-color: lightgray;
     text-align: center;
-    
 }
 
 #listeoverskrift {
     background-color: lightgray;
     position: sticky;
-    top: 70px;
+    top: 10px;
     font-size:20px;
     text-align:right;
    
@@ -22,26 +19,33 @@
 .center-text {
     text-align: center;
 }
+.table th {
+    color: black;
+    font-size: 40px;
+}
+.tr {
+    color: black;
+}
 
+.td {
+    color: black;
+    text-align: center;
+    
+}
 
-td {
+.th {
     color: black;
     text-align: center;
 }
 
-th {
-    color: white;
-    text-align: center;
-}
-
-.top-row {
+top-row {
     background-color: black;
     padding: 0px 0px 0px 0px;
     margin: 0px 0px 0px 0px;
 }
 
 
-.top-menu {
+top-menu {
     padding: 0px 0px 0px 0px;
     margin: 0px 0px 0px 0px;
     top:0px;
@@ -66,5 +70,9 @@ h3 {
     color:black;
     height:50px;
     font-size:20px;
+}
+
+.lager-table th {
+    font-size: 42px !important;
 }
 

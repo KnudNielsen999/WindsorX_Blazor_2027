@@ -1,0 +1,23 @@
+﻿/* test */
+
+body {
+    background-color: white;
+}
+
+h3 {
+    color: black;
+    text-align:center;
+    
+}
+
+/* tabel */
+table th {
+    font-size: 22px;
+    color: black;
+    background-color: lightgray;
+}
+
+table td {
+    font-size: 20px;
+    color: black;
+}
