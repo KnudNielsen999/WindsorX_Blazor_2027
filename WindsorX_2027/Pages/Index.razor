@@ -1,47 +1,170 @@
 ﻿@page "/"
-@layout MainLayout
 
-<PageTitle>WindsorX 2027</PageTitle>
+<link href="css/windsor-home.css" rel="stylesheet" />
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+<div class="wx-home">
 
-<style>
+    <section class="wx-hero">
+        <div class="wx-hero-left">
+            <div class="wx-badge">ERP Dashboard</div>
+            <h1>WindsorX_2027</h1>
+            <p class="wx-subtitle">Lagerstyring, Indkøb og Webshop</p>
+            <p class="wx-description">
+                Få samlet din virksomhed i ét moderne system med overblik over varer,
+                leverandører, indkøb og online salg.
+            </p>
+        </div>
 
-    .forside1 {
-        /* Reservér plads til sidebaren og udfyld resten */
-        margin-left: var(--sidebar-width, 0px);
-        width: calc(100vw - var(--sidebar-width, 0px));
-        /* Fyld hele (dynamiske) viewport-højden */
-        min-height: 100dvh; /* kan evt. fallbackes til 100vh for old mobile */
-        /* Baggrundsbillede: centreret, beskåret til at dække, uden gentagelse */
-        background: url('/Billeder/Baggrund2025.png') center / cover no-repeat;
-        /* Centrer indholdet horisontalt og vertikalt */
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        /* Indre luft og forudsigelig box-model */
-        padding: 2rem;
-        box-sizing: border-box;
-    }
+        <div class="wx-hero-right">
+            <div class="wx-status-card">
+                <span class="wx-status-label">Systemstatus</span>
+                <strong>Stabil drift</strong>
+                <small>Senest opdateret: 13. marts 2026</small>
+            </div>
+        </div>
+    </section>
 
-   
+    <section class="wx-stats">
+        <div class="wx-card stat">
+            <div class="wx-icon">📦</div>
+            <div>
+                <div class="wx-number">1248</div>
+                <div class="wx-label">Varer på lager</div>
+            </div>
+        </div>
 
-    .forside2 {
-        position: absolute;
-        top: 0;
-        min-height: 100vh; /* hele siden */
-        min-width: 100%;
-        background-color: lightgrey;
-    }
-    
-    
+        <div class="wx-card stat">
+            <div class="wx-icon">⚠️</div>
+            <div>
+                <div class="wx-number">18</div>
+                <div class="wx-label">Under minimum</div>
+            </div>
+        </div>
 
-</style>
+        <div class="wx-card stat">
+            <div class="wx-icon">🛒</div>
+            <div>
+                <div class="wx-number">26</div>
+                <div class="wx-label">Webshop ordrer i dag</div>
+            </div>
+        </div>
 
+        <div class="wx-card stat">
+            <div class="wx-icon">🚚</div>
+            <div>
+                <div class="wx-number">7</div>
+                <div class="wx-label">Indkøb under behandling</div>
+            </div>
+        </div>
+    </section>
 
+    <section class="wx-modules">
+        <div class="wx-card module">
+            <div class="wx-module-head">
+                <span class="wx-module-icon">📦</span>
+                <h3>Lagerstyring</h3>
+            </div>
+            <p>Administrér varer, lagerplaceringer og beholdning.</p>
+            <ul>
+                <li>Varekartotek</li>
+                <li>Lagerlokationer</li>
+                <li>Minimumslager</li>
+                <li>Status på beholdning</li>
+            </ul>
+        </div>
 
+        <div class="wx-card module">
+            <div class="wx-module-head">
+                <span class="wx-module-icon">🧾</span>
+                <h3>Indkøb</h3>
+            </div>
+            <p>Hold styr på leverandører, ordrer og varemodtagelse.</p>
+            <ul>
+                <li>Leverandørstyring</li>
+                <li>Indkøbsordrer</li>
+                <li>Modtagelse af varer</li>
+                <li>Ordrehistorik</li>
+            </ul>
+        </div>
 
-<div class="forside2">
-    <h1>ERP</h1>
+        <div class="wx-card module">
+            <div class="wx-module-head">
+                <span class="wx-module-icon">🌐</span>
+                <h3>Webshop</h3>
+            </div>
+            <p>Vis produkter online og håndtér kundebestillinger.</p>
+            <ul>
+                <li>Produkter online</li>
+                <li>Kundebestillinger</li>
+                <li>Automatisk lagertræk</li>
+                <li>Ordreoverblik</li>
+            </ul>
+        </div>
+    </section>
+
+    <section class="wx-bottom">
+        <div class="wx-card panel">
+            <h3>Seneste aktivitet</h3>
+
+            <table class="wx-table">
+                <thead>
+                    <tr>
+                        <th>Tid</th>
+                        <th>Aktivitet</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>08:15</td>
+                        <td>Vare “Skruer 5x50” opdateret</td>
+                        <td><span class="tag ok">Udført</span></td>
+                    </tr>
+                    <tr>
+                        <td>08:42</td>
+                        <td>Ny indkøbsordre oprettet</td>
+                        <td><span class="tag wait">Afventer</span></td>
+                    </tr>
+                    <tr>
+                        <td>09:03</td>
+                        <td>Webshop ordre #2048 modtaget</td>
+                        <td><span class="tag ok">Betalt</span></td>
+                    </tr>
+                    <tr>
+                        <td>09:20</td>
+                        <td>Lageralarm på “Møtrik M8”</td>
+                        <td><span class="tag danger">Lav beholdning</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="wx-card panel">
+            <h3>Systemovervågning</h3>
+
+            <div class="wx-overview">
+                <div class="wx-overview-row">
+                    <span>Aktive kunder</span>
+                    <strong>312</strong>
+                </div>
+                <div class="wx-overview-row">
+                    <span>Produkter online</span>
+                    <strong>487</strong>
+                </div>
+                <div class="wx-overview-row">
+                    <span>Dagens omsætning</span>
+                    <strong>14.875 kr.</strong>
+                </div>
+                <div class="wx-overview-row">
+                    <span>Åbne ordrer</span>
+                    <strong>31</strong>
+                </div>
+                <div class="wx-overview-row">
+                    <span>Systemstatus</span>
+                    <strong class="green">Stabil</strong>
+                </div>
+            </div>
+        </div>
+    </section>
+
 </div>
-
